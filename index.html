@@ -399,6 +399,68 @@ header {
 }
 .btn-nav:disabled { opacity: 0.3; cursor: default; }
 
+/* ── Bouton téléchargement fiches PDF ── */
+.btn-pdf-dl {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-l);
+  border: 1.5px solid var(--green);
+  color: var(--green);
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-family: 'Baloo 2', cursive;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s;
+  position: relative;
+  user-select: none;
+  outline: none;
+}
+.btn-pdf-dl:hover { background: var(--green); color: #fff; }
+.btn-pdf-dl.visible { display: flex; }
+
+.pdf-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--slide-surf);
+  border: 1.5px solid var(--slide-bord);
+  border-radius: 10px;
+  padding: 6px;
+  min-width: 260px;
+  z-index: 200;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.pdf-dropdown.open { display: block; }
+.pdf-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--slide-text);
+  text-decoration: none;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  transition: background 0.1s;
+}
+.pdf-link:hover { background: var(--slide-card); }
+.pdf-link .pdf-badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+.pdf-ce2 { background: var(--green-l); color: var(--green); }
+.pdf-cm1 { background: var(--blue-l);  color: var(--blue); }
+.pdf-cm2 { background: var(--purple-l);color: var(--purple); }
+
 /* Zone slide — fond sombre pour les slides */
 .slide-stage {
   flex: 1;
@@ -747,6 +809,23 @@ header {
           <button class="btn-nav" id="btn-prev" onclick="prevSlide()">‹</button>
           <button class="btn-nav" id="btn-next" onclick="nextSlide()">›</button>
         </div>
+        <button class="btn-pdf-dl" id="btn-pdf-dl" onclick="togglePdfMenu(event)">
+          📄 Fiches ▾
+          <div class="pdf-dropdown" id="pdf-dropdown">
+            <a class="pdf-link" id="pdf-ce2" href="#" target="_blank" onclick="event.stopPropagation()">
+              <span class="pdf-badge pdf-ce2">🟢 CE2</span>
+              <span id="pdf-ce2-name">—</span>
+            </a>
+            <a class="pdf-link" id="pdf-cm1" href="#" target="_blank" onclick="event.stopPropagation()">
+              <span class="pdf-badge pdf-cm1">🔵 CM1</span>
+              <span id="pdf-cm1-name">—</span>
+            </a>
+            <a class="pdf-link" id="pdf-cm2" href="#" target="_blank" onclick="event.stopPropagation()">
+              <span class="pdf-badge pdf-cm2">🟣 CM2</span>
+              <span id="pdf-cm2-name">—</span>
+            </a>
+          </div>
+        </button>
       </div>
       <div class="slide-stage" id="slide-stage"></div>
     </div>
@@ -765,6 +844,7 @@ const SEANCES = [
     color: '#4CAF82',
     colorL: '#1A3D2E',
     locked: false,
+    pdfs: ['https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S01_CE2_La_phrase_bien_construite.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S01_CM1_La_phrase_bien_construite.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S01_CM2_La_phrase_bien_construite.pdf'],
     slides: [
       // Slide 0 — Titre séance
       {
@@ -891,6 +971,7 @@ const SEANCES = [
     color: '#5B9CF6',
     colorL: '#1A2A4A',
     locked: false,
+    pdfs: ['https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S02_CE2_La_ponctuation.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S02_CM1_La_ponctuation.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S02_CM2_La_ponctuation.pdf'],
     slides: [
       {
         html: `
@@ -1002,6 +1083,7 @@ const SEANCES = [
     color: '#4CAF82',
     colorL: '#1A3D2E',
     locked: false,
+    pdfs: ['https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S03_CE2_Organiser_un_paragraphe.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S03_CM1_Organiser_un_paragraphe.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S03_CM2_Organiser_un_paragraphe.pdf'],
     slides: [
       {
         html: `
@@ -1113,6 +1195,7 @@ const SEANCES = [
     color: '#5B9CF6',
     colorL: '#1A2A4A',
     locked: false,
+    pdfs: ['https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S04_CE2_Les_connecteurs.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S04_CM1_Les_connecteurs.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S04_CM2_Les_connecteurs.pdf'],
     slides: [
       {
         html: `
@@ -1227,6 +1310,7 @@ const SEANCES = [
     color: '#A97FF5',
     colorL: '#2A1A4A',
     locked: false,
+    pdfs: ['https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S05_CE2_Substituts_et_reprises.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S05_CM1_Substituts_et_reprises.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S05_CM2_Substituts_et_reprises.pdf'],
     slides: [
       {
         html: `<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">🎯 Séance 5</div><div class="slide-h1">Cohérence : <span>substituts et reprises</span></div><div class="slide-sub">Jeudi 21 mai 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge">⏱ Phase 1 — Rituel · 5 min &nbsp;|&nbsp; Phase 2 — Retour S4 · 3 min</div><div class="rule-box"><div class="rule-title" style="color:#A97FF5">🔄 Retour S4</div><p>Rappel : à quoi servent les connecteurs ? Donner un exemple temporel et un logique.</p></div>`
@@ -1255,6 +1339,7 @@ const SEANCES = [
     color: '#4CAF82',
     colorL: '#1A3D2E',
     locked: false,
+    pdfs: ['https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S06_CE2_Introduction_et_conclusion.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S06_CM1_Introduction_et_conclusion.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S06_CM2_Introduction_et_conclusion.pdf'],
     slides: [
       { html: `<div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">🎯 Séance 6</div><div class="slide-h1">Introduction <span>et conclusion</span></div><div class="slide-sub">Jeudi 28 mai 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge">⏱ Phase 1 — Rituel · 5 min &nbsp;|&nbsp; Phase 2 — Retour S5 · 3 min</div>` },
       { html: `<div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">📖 Phase 3 — Leçon · 10 min</div><div class="slide-h1">Comment entrer et <span>sortir d'un texte ?</span></div><div class="consigne-box" style="border-color:#4CAF82">Ce texte manque d'introduction et de conclusion. Que ressentez-vous en lisant ?</div><div class="big-text-block" style="font-size:60px;text-align:left">Il pleuvait fort ce jour-là. Les rues étaient vides. Les voitures roulaient lentement. Les passants couraient sous leurs parapluies. Les terrasses des cafés étaient désertes.</div><button class="btn-reveal" style="--accent-color:#4CAF82;margin-bottom:16px" onclick="showIntroConclusion()">💡 Version complète</button><div id="intro-result" style="display:none"><div class="two-col"><div class="card" style="border-color:#F5A623;background:#3A2A0A"><div class="card-title" style="color:#F5A623">Introduction</div><p style="font-size:13px;font-style:italic">C'était un mercredi de novembre, l'un de ces jours où le ciel semble décidé à noyer la ville.</p></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">Conclusion</div><p style="font-size:13px;font-style:italic">La ville entière avait rendu les armes face à la pluie. Et pourtant, dans une boulangerie encore ouverte, une lumière chaude brillait.</p></div></div></div>` },
@@ -1273,6 +1358,7 @@ const SEANCES = [
     color: '#5B9CF6',
     colorL: '#1A2A4A',
     locked: false,
+    pdfs: ['https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S07_CE2_Reviser_son_texte.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S07_CM1_Reviser_son_texte.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S07_CM2_Reviser_son_texte.pdf'],
     slides: [
       { html: `<div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">🎯 Séance 7</div><div class="slide-h1">Réviser son texte <span>avec des critères</span></div><div class="slide-sub">Jeudi 4 juin 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge">⏱ Phase 1 — Rituel · 5 min &nbsp;|&nbsp; Phase 2 — Retour S6 · 3 min</div><div class="rule-box"><div class="rule-title" style="color:#5B9CF6">🔄 Retour S6</div><p>Rappel : qu'est-ce qu'une introduction efficace ? Une conclusion ? Quand doit-on changer de paragraphe ?</p></div>` },
       {
@@ -1320,6 +1406,7 @@ const SEANCES = [
     color: '#A97FF5',
     colorL: '#2A1A4A',
     locked: false,
+    pdfs: ['https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S08_CE2_Ecriture_longue.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S08_CM1_Ecriture_longue.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_production_ecrit_p5/S08_CM2_Ecriture_longue.pdf'],
     slides: [
       { html: `<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">🎯 Séance 8</div><div class="slide-h1">Écriture longue : <span>tout ensemble</span></div><div class="slide-sub">Jeudi 11 juin 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge">⏱ Phase 1 — Rituel · 5 min &nbsp;|&nbsp; Phase 2 — Retour S7 · 3 min</div><div class="rule-box"><div class="rule-title" style="color:#A97FF5">🔄 Retour S7</div><p>Rappel de la grille de révision. Annoncer l'enjeu : aujourd'hui, tout se mobilise dans un texte plus long.</p></div>` },
       {
@@ -1358,6 +1445,7 @@ const SEANCES = [
     seance:'V1 — Les synonymes',
     notion:'Des mots de sens proche',
     color:'#2DD4BF', colorL:'#0A2A28', locked:false,
+    pdfs: ['https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V01_CE2_synonymes.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V01_CM1_synonymes.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V01_CM2_synonymes.pdf'],
     slides:[
       { html:`<div class="slide-phase" style="--phase-color:#2DD4BF;--phase-bg:#0A2A28">📚 Vocabulaire — Séance 1</div><div class="slide-h1">Les <span>synonymes</span></div><div class="slide-sub">Vendredi 24 avril 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge" style="background:#0A2A28;border-color:#2DD4BF;color:#2DD4BF">⏱ Phase 1 — <a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dashed currentColor">Ma P'tite Règle ↗</a> · 5 min</div><div class="rule-box" style="background:linear-gradient(135deg,#0A2A28,#0a1a18);border-color:#2DD4BF"><div class="rule-title" style="color:#2DD4BF">📋 Structure</div><p>① Rituel (5 min) · ② Leçon collective (15 min) · ③ Exercices différenciés (20 min) · ④ Mise en commun (5 min)</p></div><div class="rule-box" style="background:linear-gradient(135deg,#1a1a3e,#1a1a2a);border-color:#5B9CF6"><div class="rule-title" style="color:#5B9CF6">🎮 Ma P'tite Règle</div><p><a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:#5B9CF6;font-weight:800;text-decoration:none;border-bottom:2px solid #5B9CF6">5ilv1.github.io/ma-ptite-regle ↗</a>&nbsp;&nbsp;<a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#1A2A4A;border:2px solid #5B9CF6;color:#5B9CF6;padding:6px 16px;border-radius:8px;font-weight:800;font-size:16px;text-decoration:none;vertical-align:middle;margin-left:10px">🚀 Ouvrir</a></p></div>` },
       { html:`<div class="slide-phase" style="--phase-color:#2DD4BF;--phase-bg:#0A2A28">📖 Phase 2 — Leçon · 15 min</div><div class="slide-h1">Des mots qui se <span>ressemblent par le sens</span></div><div class="consigne-box" style="border-color:#2DD4BF">Ces mots veulent dire la même chose. Mais sont-ils vraiment identiques ?</div><table class="reg-table"><thead><tr><th style="background:#0A2A28;color:#2DD4BF">Mot de base</th><th style="background:#1A2A4A;color:#5B9CF6">Synonyme courant</th><th style="background:#2A1A4A;color:#A97FF5">Synonyme soutenu</th></tr></thead><tbody><tr><td style="background:#0A2A28;color:#2DD4BF">marcher</td><td style="background:#1A2A4A;color:#5B9CF6">se promener</td><td style="background:#2A1A4A;color:#A97FF5">déambuler</td></tr><tr><td style="background:#0A2A28;color:#2DD4BF">content</td><td style="background:#1A2A4A;color:#5B9CF6">heureux</td><td style="background:#2A1A4A;color:#A97FF5">ravi</td></tr><tr><td style="background:#0A2A28;color:#2DD4BF">maison</td><td style="background:#1A2A4A;color:#5B9CF6">habitation</td><td style="background:#2A1A4A;color:#A97FF5">demeure</td></tr><tr><td style="background:#0A2A28;color:#2DD4BF">regarder</td><td style="background:#1A2A4A;color:#5B9CF6">observer</td><td style="background:#2A1A4A;color:#A97FF5">contempler</td></tr></tbody></table><div class="trace-box" style="border-color:#2DD4BF"><div class="trace-title" style="color:#2DD4BF">📝 À retenir</div><div class="trace-text">Des <strong>synonymes</strong> ont un sens proche mais pas identique. On les choisit selon le contexte et le registre.</div></div>` },
@@ -1373,6 +1461,7 @@ const SEANCES = [
     seance:'V2 — Les contraires',
     notion:'Antonymes : par le sens ou par préfixe',
     color:'#F472B6', colorL:'#2A0A1A', locked:false,
+    pdfs: ['https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V02_CE2_contraires.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V02_CM1_contraires.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V02_CM2_contraires.pdf'],
     slides:[
       { html:`<div class="slide-phase" style="--phase-color:#F472B6;--phase-bg:#2A0A1A">📚 Vocabulaire — Séance 2</div><div class="slide-h1">Les <span>contraires</span></div><div class="slide-sub">Vendredi 22 mai 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge" style="background:#2A0A1A;border-color:#F472B6;color:#F472B6">⏱ Phase 1 — <a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dashed currentColor">Ma P'tite Règle ↗</a> · 5 min</div><div class="rule-box" style="background:#2A0A1A;border-color:#F472B6"><div class="rule-title" style="color:#F472B6">🔄 Retour V1</div><p>Qu'est-ce qu'un synonyme ? Donner 2 exemples. Quelle différence entre <em>content</em> et <em>ravi</em> ?</p></div>` },
       { html:`<div class="slide-phase" style="--phase-color:#F472B6;--phase-bg:#2A0A1A">📖 Phase 2 — Leçon · 15 min</div><div class="slide-h1">Deux façons de former <span>un contraire</span></div><div class="two-col"><div class="card" style="border-color:#F472B6;background:#2A0A1A"><div class="card-title" style="color:#F472B6">1️⃣ Par le sens</div><p style="font-family:Caveat,cursive;font-size:42px;line-height:1.8">grand ↔ petit<br>chaud ↔ froid<br>monter ↔ descendre<br>aimer ↔ détester</p></div><div class="card" style="border-color:#F5A623;background:#3A2A0A"><div class="card-title" style="color:#F5A623">2️⃣ Par un préfixe</div><p style="font-family:Caveat,cursive;font-size:42px;line-height:1.8">possible → <strong>im</strong>possible<br>heureux → <strong>mal</strong>heureux<br>faire → <strong>dé</strong>faire<br>connu → <strong>in</strong>connu</p></div></div><div class="trace-box" style="border-color:#F472B6"><div class="trace-title" style="color:#F472B6">📝 À retenir</div><div class="trace-text">Un <strong>antonyme</strong> est le contraire d'un mot. On le forme par le sens (<em>grand ↔ petit</em>) ou avec un préfixe : <em>in-, im-, dé-, mal-, mé-.</em></div></div>` },
@@ -1388,6 +1477,7 @@ const SEANCES = [
     seance:'V3 — Les familles de mots',
     notion:'Le radical commun',
     color:'#4CAF82', colorL:'#1A3D2E', locked:false,
+    pdfs: ['https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V03_CE2_familles.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V03_CM1_familles.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V03_CM2_familles.pdf'],
     slides:[
       { html:`<div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">📚 Vocabulaire — Séance 3</div><div class="slide-h1">Familles de mots : <span>le radical</span></div><div class="slide-sub">Vendredi 29 mai 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge" style="background:#1A3D2E;border-color:#4CAF82;color:#4CAF82">⏱ Phase 1 — <a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dashed currentColor">Ma P'tite Règle ↗</a> · 5 min</div><div class="rule-box" style="border-color:#4CAF82"><div class="rule-title" style="color:#4CAF82">🔄 Retour V2</div><p>Deux façons de former un contraire — donner 1 exemple de chaque.</p></div>` },
       { html:`<div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">📖 Phase 2 — Leçon · 15 min</div><div class="slide-h1">Une famille = <span>un radical commun</span></div><div class="consigne-box" style="border-color:#4CAF82">Tous ces mots ont un radical commun. Trouvez-le !</div><div style="text-align:center;margin-bottom:14px"><span class="morpho-word"><span class="morpho-seul">port</span><span class="morpho-suffix">er</span></span><span class="morpho-word"><span class="morpho-prefix">im</span><span class="morpho-radical">port</span><span class="morpho-suffix">ation</span></span><span class="morpho-word"><span class="morpho-prefix">ex</span><span class="morpho-radical">port</span><span class="morpho-suffix">er</span></span><span class="morpho-word"><span class="morpho-radical">port</span><span class="morpho-suffix">eur</span></span></div><div style="text-align:center;margin-bottom:14px;font-size:16px;color:var(--muted)">Radical commun : <span style="color:#2DD4BF;font-family:Caveat,cursive;font-size:44px;font-weight:700">port</span> → idée de « transporter »</div><div class="two-col"><div class="card" style="border-color:#4CAF82;background:#1A3D2E"><div class="card-title" style="color:#4CAF82">Famille de <em>terre</em></div><p style="font-family:Caveat,cursive;font-size:36px;line-height:1.8">territoire · terrestre · enterrer · atterrir · terrain</p></div><div class="card" style="border-color:#5B9CF6;background:#1A2A4A"><div class="card-title" style="color:#5B9CF6">Famille de <em>voir</em></div><p style="font-family:Caveat,cursive;font-size:36px;line-height:1.8">visible · invisible · prévoir · revoir · visuel</p></div></div><div class="trace-box" style="border-color:#4CAF82"><div class="trace-title" style="color:#4CAF82">📝 À retenir</div><div class="trace-text">Une <strong>famille de mots</strong> regroupe des mots qui partagent le même <strong>radical</strong> et ont un sens lié. Attention aux faux amis : <em>terrible</em> n'est pas dans la famille de <em>terre</em> !</div></div>` },
@@ -1403,6 +1493,7 @@ const SEANCES = [
     seance:'V4 — Préfixes et suffixes',
     notion:'Décomposer pour comprendre',
     color:'#F5A623', colorL:'#3A2A0A', locked:false,
+    pdfs: ['https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V04_CE2_prefixes_suffixes.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V04_CM1_prefixes_suffixes.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V04_CM2_prefixes_suffixes.pdf'],
     slides:[
       { html:`<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">📚 Vocabulaire — Séance 4</div><div class="slide-h1">Préfixes et <span>suffixes</span></div><div class="slide-sub">Vendredi 5 juin 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge">⏱ Phase 1 — <a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dashed currentColor">Ma P'tite Règle ↗</a> · 5 min</div><div class="rule-box" style="border-color:#F5A623"><div class="rule-title" style="color:#F5A623">🔄 Retour V3</div><p>Qu'est-ce qu'un radical ? Donner un exemple de famille de mots. Comment le radical aide-t-il à comprendre un mot inconnu ?</p></div>` },
       { html:`<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">📖 Phase 2 — Leçon · 15 min</div><div class="slide-h1">Avant et après <span>le radical</span></div><div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:16px"><div style="background:#3A2A0A;border:2px solid #F5A623;color:#F5A623;padding:10px 16px;border-radius:10px;text-align:center"><div style="font-size:15px;font-weight:800">PRÉFIXE</div><div style="font-size:12px;margin-top:4px">avant · modifie le sens</div></div><div style="font-size:26px;color:var(--muted)">+</div><div style="background:var(--teal-l);border:2px solid var(--teal);color:var(--teal);padding:10px 16px;border-radius:10px;text-align:center"><div style="font-size:15px;font-weight:800">RADICAL</div><div style="font-size:12px;margin-top:4px">sens de base</div></div><div style="font-size:26px;color:var(--muted)">+</div><div style="background:var(--purple-l);border:2px solid var(--purple);color:var(--purple);padding:10px 16px;border-radius:10px;text-align:center"><div style="font-size:15px;font-weight:800">SUFFIXE</div><div style="font-size:12px;margin-top:4px">après · change la classe</div></div></div><div class="two-col"><div class="card" style="border-color:#F5A623;background:#3A2A0A"><div class="card-title" style="color:#F5A623">Préfixes fréquents</div><p style="font-family:Caveat,cursive;font-size:36px;line-height:1.9"><span style="color:#F5A623">re-</span> refaire · <span style="color:#F5A623">dé-</span> défaire<br><span style="color:#F5A623">in-/im-</span> invisible · impossible<br><span style="color:#F5A623">pré-</span> prévoir · <span style="color:#F5A623">sur-</span> survoler</p></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">Suffixes fréquents</div><p style="font-family:Caveat,cursive;font-size:36px;line-height:1.9"><span style="color:#A97FF5">-eur/-euse</span> coiffeur<br><span style="color:#A97FF5">-tion</span> observation<br><span style="color:#A97FF5">-able</span> lavable<br><span style="color:#A97FF5">-ment</span> doucement</p></div></div><div class="trace-box" style="border-color:#F5A623"><div class="trace-title" style="color:#F5A623">📝 À retenir</div><div class="trace-text">Un <strong>préfixe</strong> avant le radical modifie le sens. Un <strong>suffixe</strong> après change la classe grammaticale : <em>observer (verbe) → observation (nom) → observable (adjectif).</em></div></div>` },
@@ -1418,6 +1509,7 @@ const SEANCES = [
     seance:'V5 — Formation des mots',
     notion:'Dérivation et composition',
     color:'#A97FF5', colorL:'#2A1A4A', locked:false,
+    pdfs: ['https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V05_CE2_formation_mots.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V05_CM1_formation_mots.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V05_CM2_formation_mots.pdf'],
     slides:[
       { html:`<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">📚 Vocabulaire — Séance 5</div><div class="slide-h1">Formation <span>des mots</span></div><div class="slide-sub">Vendredi 12 juin 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge" style="background:#2A1A4A;border-color:#A97FF5;color:#A97FF5">⏱ Phase 1 — <a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dashed currentColor">Ma P'tite Règle ↗</a> · 5 min</div><div class="rule-box" style="background:#2A1A4A;border-color:#A97FF5"><div class="rule-title" style="color:#A97FF5">🔄 Retour V4</div><p>Rappel : préfixe / radical / suffixe. Donner un exemple de mot décomposé avec sa signification.</p></div>` },
       { html:`<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">📖 Phase 2 — Leçon · 15 min</div><div class="slide-h1">Deux façons de <span>créer des mots</span></div><div class="two-col"><div class="card" style="border-color:#F5A623;background:#3A2A0A"><div class="card-title" style="color:#F5A623">1️⃣ La dérivation</div><p style="font-size:16px;line-height:1.7;margin-bottom:8px">Ajouter un préfixe ou suffixe à un radical.</p><p style="font-family:Caveat,cursive;font-size:38px;line-height:1.8">observer → observable<br>terre → enterrer<br>possible → impossible</p></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">2️⃣ La composition</div><p style="font-size:16px;line-height:1.7;margin-bottom:8px">Assembler deux mots existants.</p><p style="font-family:Caveat,cursive;font-size:38px;line-height:1.8">sous + marin = sous-marin<br>porte + manteau = portemanteau<br>chou + fleur = chou-fleur</p></div></div><div class="card" style="border-color:#2DD4BF;background:#0A2A28;margin-bottom:12px"><div class="card-title" style="color:#2DD4BF">🔬 Bonus CM2 — Racines grecques et latines</div><p style="font-family:Caveat,cursive;font-size:36px;line-height:1.8"><span style="color:#2DD4BF">bio-</span> = vie · <span style="color:#2DD4BF">geo-</span> = terre · <span style="color:#2DD4BF">graph-</span> = écrire · <span style="color:#2DD4BF">-phile</span> = qui aime</p></div><div class="trace-box" style="border-color:#A97FF5"><div class="trace-title" style="color:#A97FF5">📝 À retenir</div><div class="trace-text">On forme des mots par <strong>dérivation</strong> (préfixe/suffixe : <em>invisible</em>) ou par <strong>composition</strong> (assemblage : <em>porte-monnaie</em>).</div></div>` },
@@ -1433,6 +1525,7 @@ const SEANCES = [
     seance:'V6 — Les registres de langue',
     notion:'Familier · Courant · Soutenu',
     color:'#5B9CF6', colorL:'#1A2A4A', locked:false,
+    pdfs: ['https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V06_CE2_registres.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V06_CM1_registres.pdf', 'https://5ilv1.github.io/diaporama-p5/fiches_vocabulaire_p5/V06_CM2_registres.pdf'],
     slides:[
       { html:`<div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">📚 Vocabulaire — Séance 6</div><div class="slide-h1">Les registres <span>de langue</span></div><div class="slide-sub">Vendredi 19 juin 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge" style="background:#1A2A4A;border-color:#5B9CF6;color:#5B9CF6">⏱ Phase 1 — <a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dashed currentColor">Ma P'tite Règle ↗</a> · 5 min</div><div class="rule-box" style="background:#1A2A4A;border-color:#5B9CF6"><div class="rule-title" style="color:#5B9CF6">🔄 Retour V5</div><p>Dérivation vs composition — donner un exemple de chaque procédé.</p></div>` },
       { html:`<div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">📖 Phase 2 — Leçon · 15 min</div><div class="slide-h1">Les trois <span>registres</span></div><div class="consigne-box" style="border-color:#5B9CF6">Ces phrases veulent dire la même chose. Qu'est-ce qui change ?</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px"><div class="card" style="border-color:#F56B6B;background:#3A1A1A"><div class="card-title" style="color:#F56B6B">😎 Familier</div><p style="font-family:Caveat,cursive;font-size:42px;color:#F56B6B">T'as vu mon bouquin ?</p></div><div class="card" style="border-color:#5B9CF6;background:#1A2A4A"><div class="card-title" style="color:#5B9CF6">🗣 Courant</div><p style="font-family:Caveat,cursive;font-size:42px;color:#5B9CF6">As-tu vu mon livre ?</p></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">🎩 Soutenu</div><p style="font-family:Caveat,cursive;font-size:42px;color:#A97FF5">Auriez-vous aperçu mon ouvrage ?</p></div></div><table class="reg-table"><thead><tr><th style="background:#3A1A1A;color:#F56B6B">Familier</th><th style="background:#1A2A4A;color:#5B9CF6">Courant</th><th style="background:#2A1A4A;color:#A97FF5">Soutenu</th></tr></thead><tbody><tr><td style="background:#3A1A1A;color:#F56B6B">une bagnole</td><td style="background:#1A2A4A;color:#5B9CF6">une voiture</td><td style="background:#2A1A4A;color:#A97FF5">un véhicule</td></tr><tr><td style="background:#3A1A1A;color:#F56B6B">bouffer</td><td style="background:#1A2A4A;color:#5B9CF6">manger</td><td style="background:#2A1A4A;color:#A97FF5">se restaurer</td></tr><tr><td style="background:#3A1A1A;color:#F56B6B">un gosse</td><td style="background:#1A2A4A;color:#5B9CF6">un enfant</td><td style="background:#2A1A4A;color:#A97FF5">un bambin</td></tr><tr><td style="background:#3A1A1A;color:#F56B6B">un bouquin</td><td style="background:#1A2A4A;color:#5B9CF6">un livre</td><td style="background:#2A1A4A;color:#A97FF5">un ouvrage</td></tr></tbody></table><div class="trace-box" style="border-color:#5B9CF6"><div class="trace-title" style="color:#5B9CF6">📝 À retenir</div><div class="trace-text">Le <strong>registre familier</strong> s'utilise entre amis. Le <strong>registre courant</strong> convient en classe et à l'écrit du quotidien. Le <strong>registre soutenu</strong> s'emploie dans les textes littéraires et situations formelles.</div></div>` },
@@ -1450,6 +1543,17 @@ const SEANCES = [
 // ══════════════════════════════════════
 let currentSeance = null;
 let currentSlide = 0;
+
+// ── Bouton fiches PDF ──────────────────────────────────────────────
+function togglePdfMenu(e) {
+  e.stopPropagation();
+  const dd = document.getElementById('pdf-dropdown');
+  dd.classList.toggle('open');
+}
+document.addEventListener('click', () => {
+  const dd = document.getElementById('pdf-dropdown');
+  if (dd) dd.classList.remove('open');
+});
 
 // ══════════════════════════════════════
 // CALENDRIER
@@ -1512,6 +1616,22 @@ function openSeance(id) {
   document.getElementById('screen-cal').classList.remove('active');
   document.getElementById('screen-slide').classList.add('active');
   document.documentElement.style.setProperty('--accent-color', currentSeance.color);
+
+  // Bouton fiches PDF — visible uniquement pour les séances vocabulaire
+  const btnPdf = document.getElementById('btn-pdf-dl');
+  if (currentSeance.pdfs) {
+    const names = currentSeance.pdfs.map(u => u.split('/').pop());
+    document.getElementById('pdf-ce2').href = currentSeance.pdfs[0];
+    document.getElementById('pdf-ce2-name').textContent = names[0];
+    document.getElementById('pdf-cm1').href = currentSeance.pdfs[1];
+    document.getElementById('pdf-cm1-name').textContent = names[1];
+    document.getElementById('pdf-cm2').href = currentSeance.pdfs[2];
+    document.getElementById('pdf-cm2-name').textContent = names[2];
+    btnPdf.classList.add('visible');
+  } else {
+    btnPdf.classList.remove('visible');
+  }
+
   renderSlides();
   updateNav();
 }
@@ -1519,6 +1639,7 @@ function openSeance(id) {
 function goBack() {
   document.getElementById('screen-slide').classList.remove('active');
   document.getElementById('screen-cal').classList.add('active');
+  document.getElementById('btn-pdf-dl').classList.remove('visible');
   currentSeance = null;
 }
 
