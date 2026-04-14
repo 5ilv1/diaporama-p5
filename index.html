@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Français — P5 · Diaporama</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700;800;900&family=Caveat:wght@400;600;700&display=swap');
+
+/* ══ VARIABLES ══════════════════════════════════════════════════════ */
+:root {
+  /* Palette Ma P'tite Règle — shell */
+  --pink:        var(--slide-surf);
+  --pink-dark:   var(--slide-bord);
+  --pink-light:  var(--slide-bg);
+  --red:         #F5A623;
+  --red-light:   #FF5A3C;
+  --bg:          var(--slide-bg);
+  --white:       #FFFFFF;
+  --ink:         #1A0A08;
+  --ink2:        #5A2A1A;
+  --ink3:        #A07060;
+  --border:      var(--slide-bord);
+  --shadow-sm:   0 2px 8px rgba(232,50,26,0.10);
+  --shadow-md:   0 4px 20px rgba(232,50,26,0.13);
+
+  /* Palette diapo — couleurs accent slides */
+  --green:       #4CAF82;
+  --green-l:     #1A3D2E;
+  --blue:        #5B9CF6;
+  --blue-l:      #1A2A4A;
+  --purple:      #A97FF5;
+  --purple-l:    #2A1A4A;
+  --orange:      #F5A623;
+  --orange-l:    #3A2A0A;
+  --dred:        #F56B6B;
+  --dred-l:      #3A1A1A;
+  --teal:        #2DD4BF;
+  --teal-l:      #0A2A28;
+  --dpink:       #F472B6;
+  --dpink-l:     #2A0A1A;
+
+  /* Slides dark surface */
+  --slide-bg:    #1C1C2E;
+  --slide-surf:  #252540;
+  --slide-card:  #2E2E4E;
+  --slide-bord:  #3A3A5C;
+  --slide-text:  #E8E8F0;
+  --slide-muted: #8888AA;
+  --chalk:       #F0EEE8;
+
+  --radius:      12px;
+  --radius-lg:   20px;
+  --accent-color: var(--orange);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--slide-bg);
+  color: var(--slide-text);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ══ HEADER ══════════════════════════════════════════════════════════ */
+header {
+  background: var(--slide-surf);
+  border-bottom: 3px solid var(--slide-bord);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 66px;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 300;
+  box-shadow: 0 3px 16px rgba(0,0,0,0.4);
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.header-icon {
+  font-size: 32px;
+  line-height: 1;
+}
+.header-title {
+  font-family: 'Baloo 2', cursive;
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--orange);
+  line-height: 1.1;
+  letter-spacing: -0.3px;
+}
+.header-title small {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--slide-muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.header-badge {
+  background: var(--orange);
+  color: #fff;
+  font-family: 'Baloo 2', cursive;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 5px 16px;
+  border-radius: 30px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 3px 10px rgba(245,166,35,0.3);
+}
+
+/* ══ LAYOUT ══════════════════════════════════════════════════════════ */
+.app {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  height: calc(100vh - 66px);
+  margin-top: 66px;
+}
+
+/* ══ SIDEBAR ══════════════════════════════════════════════════════════ */
+.sidebar {
+  background: var(--slide-surf);
+  border-right: 3px solid var(--slide-bord);
+  overflow-y: auto;
+  padding: 16px 12px 24px;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--slide-bord); border-radius: 4px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+
+.sidebar-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--slide-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 14px;
+  padding-left: 4px;
+}
+
+.month-block { margin-bottom: 20px; }
+.month-label {
+  font-family: 'Baloo 2', cursive;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--orange);
+  margin-bottom: 8px;
+  padding: 3px 10px;
+  background: var(--slide-surf);
+  border-radius: 10px;
+  display: inline-block;
+}
+
+/* Bouton séance dans la sidebar */
+.cal-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--slide-bg);
+  border: 2px solid var(--slide-bord);
+  border-radius: 12px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.cal-btn::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--day-color, var(--orange));
+  border-radius: 4px 0 0 4px;
+}
+.cal-btn:hover:not(.locked) {
+  border-color: var(--day-color, var(--orange));
+  background: var(--slide-surf);
+  transform: translateX(3px);
+  box-shadow: var(--shadow-sm);
+}
+.cal-btn.active {
+  background: var(--slide-surf);
+  border-color: var(--day-color, var(--orange));
+  box-shadow: var(--shadow-sm);
+}
+.cal-btn.locked { opacity: 0.35; cursor: default; }
+.cal-btn.locked:hover { transform: none; }
+
+.cal-btn-date {
+  font-family: 'Baloo 2', cursive;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--day-color, var(--orange));
+  line-height: 1;
+  flex-shrink: 0;
+  width: 32px;
+  text-align: center;
+}
+.cal-btn-body { flex: 1; min-width: 0; }
+.cal-btn-disc {
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--slide-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1px;
+}
+.cal-btn-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--slide-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+.cal-btn-notion {
+  font-size: 10px;
+  color: var(--slide-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cal-btn-count {
+  font-family: 'Baloo 2', cursive;
+  font-size: 10px;
+  font-weight: 800;
+  background: var(--day-color, var(--orange));
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+.cal-btn-lock { font-size: 14px; flex-shrink: 0; opacity: 0.5; }
+
+/* ══ ZONE PRINCIPALE ══════════════════════════════════════════════════ */
+.main {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--slide-bg);
+}
+
+/* ── Écran calendrier (accueil) ── */
+#screen-cal {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+#screen-cal.active { display: flex; }
+
+.welcome-card {
+  background: var(--slide-surf);
+  border: 3px solid var(--slide-bord);
+  border-radius: 24px;
+  padding: 40px 48px;
+  text-align: center;
+  max-width: 520px;
+  box-shadow: var(--shadow-md);
+}
+.welcome-emoji { font-size: 56px; margin-bottom: 16px; }
+.welcome-card h1 {
+  font-family: 'Baloo 2', cursive;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--orange);
+  margin-bottom: 10px;
+}
+.welcome-card p {
+  font-size: 15px;
+  color: var(--slide-muted);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.welcome-legend {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.legend-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--slide-bg);
+  border: 2px solid var(--slide-bord);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--slide-muted);
+}
+.legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+
+/* ── Écran slide ── */
+#screen-slide {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+#screen-slide.active { display: flex; }
+
+/* Topbar slide */
+.slide-topbar {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: var(--slide-surf);
+  border-bottom: 2px solid var(--slide-bord);
+  gap: 14px;
+  flex-shrink: 0;
+  z-index: 10;
+}
+.btn-back {
+  background: var(--slide-bg);
+  border: 2px solid var(--slide-bord);
+  color: var(--slide-muted);
+  padding: 7px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Baloo 2', cursive;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+.btn-back:hover { border-color: var(--orange); color: var(--orange); }
+
+.slide-meta { flex: 1; }
+.slide-meta-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--slide-text);
+}
+.slide-meta-sub {
+  font-size: 11px;
+  color: var(--slide-muted);
+  margin-top: 1px;
+}
+
+.slide-progress { display: flex; align-items: center; gap: 6px; }
+.progress-dots { display: flex; gap: 5px; }
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--slide-bord);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.dot.active {
+  background: var(--accent-color, var(--orange));
+  transform: scale(1.3);
+}
+.dot.done {
+  background: var(--accent-color, var(--orange));
+  opacity: 0.45;
+}
+
+.slide-nav { display: flex; gap: 6px; }
+.btn-nav {
+  background: var(--slide-bg);
+  border: 2px solid var(--slide-bord);
+  color: var(--slide-muted);
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.btn-nav:hover:not(:disabled) {
+  background: var(--accent-color, var(--orange));
+  color: #fff;
+  border-color: transparent;
+}
+.btn-nav:disabled { opacity: 0.3; cursor: default; }
+
+/* Zone slide — fond sombre pour les slides */
+.slide-stage {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  background: var(--slide-bg);
+}
+
+.slide {
+  display: none;
+  position: absolute;
+  inset: 0;
+  padding: 28px 48px;
+  overflow-y: auto;
+  animation: slideIn 0.25s ease;
+  color: var(--slide-text);
+  font-family: 'Nunito', sans-serif;
+}
+.slide.active { display: block; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ══ COMPOSANTS SLIDES (repris du diapo) ════════════════════════════ */
+.slide-phase {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--phase-bg, var(--teal-l));
+  border: 1px solid var(--phase-color, var(--teal));
+  color: var(--phase-color, var(--teal));
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 14px;
+}
+.slide-h1 {
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(26px, 3.2vw, 40px);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+.slide-h1 span { color: var(--accent-color, var(--orange)); }
+.slide-sub {
+  font-size: 14px;
+  color: var(--slide-muted);
+  margin-bottom: 20px;
+  font-style: italic;
+}
+.consigne-box {
+  background: var(--slide-card);
+  border-left: 4px solid var(--accent-color, var(--orange));
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 14px 20px;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--slide-text);
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+.rule-box {
+  background: linear-gradient(135deg, var(--teal-l), #0a1a18);
+  border: 2px solid var(--teal);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 18px;
+}
+.rule-box .rule-title {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--teal);
+  margin-bottom: 8px;
+}
+.rule-box p { font-size: 19px; color: var(--slide-text); line-height: 1.6; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.card {
+  background: var(--slide-card);
+  border: 1px solid var(--slide-bord);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+.card-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+}
+.phrase-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--slide-surf);
+  border: 1px solid var(--slide-bord);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  margin-bottom: 8px;
+}
+.phrase-text {
+  flex: 1;
+  font-family: 'Caveat', cursive;
+  font-size: 48px;
+  color: var(--slide-text);
+}
+.phrase-badge {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 900;
+  flex-shrink: 0;
+  cursor: pointer;
+  border: 2px solid var(--slide-bord);
+  color: var(--slide-muted);
+  background: transparent;
+  font-family: 'Nunito', sans-serif;
+  transition: all 0.2s;
+}
+.phrase-badge:hover { transform: scale(1.1); }
+.phrase-badge.ok { background: var(--green); border-color: var(--green); color: white; }
+.phrase-badge.ko { background: var(--dred); border-color: var(--dred); color: white; }
+.phrase-reason {
+  font-size: 13px;
+  color: var(--slide-muted);
+  display: none;
+  margin-top: 4px;
+  padding: 6px 10px;
+  background: var(--slide-surf);
+  border-radius: 8px;
+  font-style: italic;
+}
+.phrase-reason.visible { display: block; }
+.timer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--teal-l);
+  border: 1px solid var(--teal);
+  color: var(--teal);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+.trace-box {
+  background: linear-gradient(135deg, #1a1a2e, #0a1a28);
+  border: 2px solid var(--teal);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-top: 14px;
+}
+.trace-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--teal);
+  margin-bottom: 8px;
+}
+.trace-text {
+  font-family: 'Caveat', cursive;
+  font-size: 44px;
+  color: var(--chalk);
+  line-height: 1.6;
+}
+.btn-reveal {
+  background: var(--slide-card);
+  border: 2px solid var(--accent-color, var(--orange));
+  color: var(--accent-color, var(--orange));
+  padding: 10px 22px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-family: 'Baloo 2', cursive;
+  font-size: 14px;
+  font-weight: 800;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.btn-reveal:hover { background: var(--accent-color, var(--orange)); color: white; }
+.correction-reveal {
+  margin-top: 10px;
+  padding: 12px 16px;
+  background: var(--green-l);
+  border: 1px solid var(--green);
+  border-radius: var(--radius);
+  font-size: 14px;
+  color: var(--green);
+  display: none;
+}
+.correction-reveal.visible { display: block; animation: fadeIn 0.3s; }
+.niveau-tags { display: flex; gap: 8px; margin-bottom: 14px; }
+.niveau-ce2  { background: var(--green-l); color: var(--green); border: 1px solid var(--green); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; }
+.niveau-cm1  { background: var(--blue-l);  color: var(--blue);  border: 1px solid var(--blue);  padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; }
+.niveau-cm2  { background: var(--purple-l);color: var(--purple);border: 1px solid var(--purple);padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; }
+.versions-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.version-card { border-radius: var(--radius); padding: 14px 16px; border: 2px solid var(--slide-bord); background: var(--slide-card); }
+.version-label { font-family: 'Baloo 2', cursive; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; color: var(--slide-muted); }
+.version-text { font-family: 'Caveat', cursive; font-size: 42px; color: var(--slide-text); line-height: 1.4; }
+.version-verdict { font-size: 17px; font-style: italic; margin-top: 8px; opacity: 0; transition: opacity 0.4s; }
+.version-verdict.visible { opacity: 1; }
+.big-text-block {
+  background: #0d0d1a;
+  border: 2px solid var(--slide-bord);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  font-family: 'Caveat', cursive;
+  font-size: 52px;
+  color: var(--chalk);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.reg-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+.reg-table th { padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 800; text-align: center; }
+.reg-table td { padding: 10px 14px; border-bottom: 1px solid var(--slide-bord); font-family: 'Caveat', cursive; font-size: 40px; text-align: center; }
+.reg-table tr:last-child td { border-bottom: none; }
+.morpho-word { display: inline-flex; align-items: stretch; font-family: 'Caveat', cursive; font-size: 46px; margin: 5px; }
+.morpho-prefix  { background: var(--orange-l); border: 2px solid var(--orange); color: var(--orange); padding: 4px 10px; border-radius: 8px 0 0 8px; }
+.morpho-radical { background: var(--teal-l); border-top: 2px solid var(--teal); border-bottom: 2px solid var(--teal); color: var(--teal); padding: 4px 10px; }
+.morpho-suffix  { background: var(--purple-l); border: 2px solid var(--purple); color: var(--purple); padding: 4px 10px; border-radius: 0 8px 8px 0; }
+.morpho-seul    { background: var(--teal-l); border: 2px solid var(--teal); color: var(--teal); padding: 4px 10px; border-radius: 8px 0 0 8px; }
+/* DnD */
+.dnd-container { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.dnd-source { background: var(--slide-surf); border: 1px solid var(--slide-bord); border-radius: var(--radius); padding: 12px; min-height: 60px; }
+.dnd-source-title { font-family: 'Baloo 2', cursive; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: var(--slide-muted); margin-bottom: 10px; }
+.dnd-target { background: var(--slide-card); border: 2px dashed var(--slide-bord); border-radius: var(--radius); padding: 12px; min-height: 100px; transition: all 0.2s; }
+.dnd-target.drag-over { border-color: var(--accent-color, var(--orange)); background: var(--orange-l); }
+.dnd-target-title { font-family: 'Baloo 2', cursive; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+.dnd-item { background: var(--slide-surf); border: 1px solid var(--slide-bord); border-radius: 8px; padding: 8px 14px; font-family: 'Caveat', cursive; font-size: 44px; color: var(--slide-text); cursor: grab; margin-bottom: 6px; transition: all 0.15s; user-select: none; display: flex; align-items: center; gap: 8px; }
+.dnd-item:hover { transform: translateX(3px); border-color: var(--accent-color, var(--orange)); }
+.dnd-item.dragging { opacity: 0.4; }
+.dnd-item::before { content: '⠿'; color: var(--slide-muted); font-size: 14px; }
+.dnd-correct { border-color: var(--green) !important; background: var(--green-l) !important; color: var(--green) !important; }
+.dnd-wrong   { border-color: var(--dred) !important;  background: var(--dred-l) !important;  color: var(--dred) !important; }
+/* Steps */
+.steps-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.step-item { display: flex; align-items: center; gap: 12px; }
+.step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-color, var(--orange)); color: white; font-size: 14px; font-weight: 900; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.step-conn { background: var(--orange-l); border: 2px solid var(--orange); border-radius: 8px; padding: 8px 18px; font-size: 22px; font-weight: 800; color: var(--orange); min-width: 100px; text-align: center; }
+.step-phrase { flex: 1; background: var(--slide-card); border: 1px solid var(--slide-bord); border-radius: 8px; padding: 10px 16px; font-family: 'Caveat', cursive; font-size: 52px; color: var(--slide-text); }
+/* Critères */
+.criteria-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 20px; }
+.criteria-table th { background: var(--slide-card); color: var(--slide-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; padding: 10px 14px; text-align: left; font-weight: 800; }
+.criteria-table td { padding: 10px 14px; border-bottom: 1px solid var(--slide-bord); color: var(--slide-text); }
+.criteria-table tr:last-child td { border-bottom: none; }
+.crit-ok { background: var(--green); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; }
+.crit-ko { background: var(--dred); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; }
+.crit-pending { background: var(--slide-card); border: 2px solid var(--slide-bord); color: var(--slide-muted); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.crit-pending:hover { border-color: var(--orange); color: var(--orange); }
+/* Plans */
+.plan-questions { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
+.plan-q { background: var(--slide-card); border: 1px solid var(--slide-bord); border-left: 4px solid var(--purple); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 18px; }
+.plan-q-num { font-family: 'Baloo 2', cursive; font-size: 11px; font-weight: 800; color: var(--purple); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+.plan-q-text { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+.plan-q-ex { font-size: 16px; color: var(--slide-muted); font-style: italic; }
+/* Subs */
+.subs-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: start; margin-bottom: 20px; }
+
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .slide { padding: 18px 20px; }
+  .slide-h1 { font-size: 22px; }
+  .two-col, .three-col, .versions-grid, .dnd-container { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════════════════════ -->
+<header>
+  <div class="header-left">
+    <div class="header-icon">📚</div>
+    <div class="header-title">
+      Français — Période 5
+      <small>CE2 · CM1 · CM2 — Académie de Besançon</small>
+    </div>
+  </div>
+  <div class="header-badge">P5 · 2026</div>
+</header>
+
+<!-- ══ APP ═════════════════════════════════════════════════════════════ -->
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-title">📅 Séances</div>
+    <div id="cal-sidebar-content"></div>
+  </aside>
+
+  <!-- ZONE PRINCIPALE -->
+  <main class="main">
+
+    <!-- Écran accueil -->
+    <div id="screen-cal" class="screen active">
+      <div class="welcome-card">
+        <div class="welcome-emoji">👋</div>
+        <h1>Bonjour !</h1>
+        <p>Sélectionne une séance dans le calendrier à gauche pour lancer le diaporama.<br>
+        <strong>←→</strong> pour naviguer entre les slides · <strong>Échap</strong> pour revenir.</p>
+        <div class="welcome-legend">
+          <div class="legend-chip">
+            <div class="legend-dot" style="background:#F5A623"></div>
+            ✏️ Production d'écrits — jeudis
+          </div>
+          <div class="legend-chip">
+            <div class="legend-dot" style="background:#2DD4BF"></div>
+            📚 Vocabulaire — vendredis
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Écran slide -->
+    <div id="screen-slide" class="screen">
+      <div class="slide-topbar">
+        <button class="btn-back" onclick="goBack()">← Séances</button>
+        <div class="slide-meta">
+          <div class="slide-meta-title" id="slide-title-bar">—</div>
+          <div class="slide-meta-sub" id="slide-sub-bar">—</div>
+        </div>
+        <div class="slide-progress">
+          <div class="progress-dots" id="progress-dots"></div>
+        </div>
+        <div class="slide-nav">
+          <button class="btn-nav" id="btn-prev" onclick="prevSlide()">‹</button>
+          <button class="btn-nav" id="btn-next" onclick="nextSlide()">›</button>
+        </div>
+      </div>
+      <div class="slide-stage" id="slide-stage"></div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const SEANCES = [
+  {
+    id: 's1',
+    date: '23',
+    month: 'Avril',
+    seance: 'S1 — La phrase bien construite',
+    notion: 'Produire des phrases syntaxiquement correctes',
+    color: '#4CAF82',
+    colorL: '#1A3D2E',
+    locked: false,
+    slides: [
+      // Slide 0 — Titre séance
+      {
+        phase: '🎯 Objectif', phaseColor: '#4CAF82', phaseBg: '#1A3D2E',
+        html: `
+          <div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">🎯 Séance 1</div>
+          <div class="slide-h1">La phrase <span>bien construite</span></div>
+          <div class="slide-sub">Jeudi 23 avril 2026 · 45 minutes</div>
+          <div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div>
+          <div class="timer-badge">⏱ Phase 1 — <a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dashed currentColor">Ma P'tite Règle ↗</a> · 5 min</div>
+          <div class="rule-box">
+            <div class="rule-title">📋 Structure de la séance</div>
+            <p>① Rituel (5 min) · ② Retour S0 (–) · ③ Leçon (10 min) · ④ Exercice collectif (5 min) · ⑤ Exercices individuels (17 min) · ⑥ Bilan (5 min)</p>
+          </div>
+          <div class="rule-box" style="background:linear-gradient(135deg,#1a1a3e,#1a1a2a);border-color:#5B9CF6">
+            <div class="rule-title" style="color:#5B9CF6">🎮 Ma P'tite Règle</div>
+            <p>Lancer le rituel sur le tableau interactif : <a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:#5B9CF6;font-weight:800;text-decoration:none;border-bottom:2px solid #5B9CF6;padding-bottom:1px">5ilv1.github.io/ma-ptite-regle ↗</a> &nbsp;<a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#1A2A4A;border:2px solid #5B9CF6;color:#5B9CF6;padding:6px 16px;border-radius:8px;font-weight:800;font-size:16px;text-decoration:none;vertical-align:middle;margin-left:10px">🚀 Ouvrir</a></p>
+          </div>
+        `
+      },
+      // Slide 1 — Leçon
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">📖 Phase 3 — Leçon · 10 min</div>
+          <div class="slide-h1">Qu'est-ce qu'une phrase <span>complète</span> ?</div>
+          <div class="slide-sub">Découverte collective</div>
+          <div class="consigne-box" style="border-color:#4CAF82">Observez ces trois exemples. Qu'est-ce qui manque dans les deux premières ?</div>
+          <div id="exemples-lecon">
+            <div class="phrase-item" id="ex1">
+              <span class="phrase-text">Mange la pomme.</span>
+              <button class="phrase-badge" onclick="toggleBadge(this,\'?\',\'r1\')">?</button>
+            </div>
+            <div class="phrase-reason" id="r1">Il manque le <strong>sujet</strong> : qui mange ?</div>
+            <div class="phrase-item" id="ex2">
+              <span class="phrase-text">Le chien dans le jardin.</span>
+              <button class="phrase-badge" onclick="toggleBadge(this,\'?\',\'r2\')">?</button>
+            </div>
+            <div class="phrase-reason" id="r2">Il manque le <strong>verbe conjugué</strong>.</div>
+            <div class="phrase-item" style="border-color:#4CAF82;background:#1A3D2E">
+              <span class="phrase-text">Le chien court dans le jardin.</span>
+              <div class="phrase-badge ok">✓</div>
+            </div>
+          </div>
+          <div class="trace-box">
+            <div class="trace-title">📝 À retenir</div>
+            <div class="trace-text">Une phrase correcte contient au minimum un <strong>sujet</strong> et un <strong>verbe conjugué</strong>. Elle peut être enrichie de compléments.</div>
+          </div>
+        `
+      },
+      // Slide 2 — Phase 4 collectif
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">⚡ Phase 4 — Exercice collectif · 5 min</div>
+          <div class="slide-h1">Phrase complète <span>ou pas ?</span></div>
+          <div class="consigne-box" style="border-color:#F5A623">Pour chaque exemple, levez la main : ✓ complète ou ✗ incomplète ? Expliquez pourquoi. Cliquez sur le badge pour révéler.</div>
+          <div id="phrases-collectif">
+            <div class="phrase-item">
+              <span class="phrase-text">Le chien.</span>
+              <button class="phrase-badge" data-result="ko" onclick="toggleBadge(this,\'ko\',\'rc1\')">?</button>
+            </div>
+            <div class="phrase-reason" id="rc1">Pas de verbe conjugué.</div>
+            <div class="phrase-item">
+              <span class="phrase-text">Court très vite.</span>
+              <button class="phrase-badge" data-result="ko" onclick="toggleBadge(this,\'ko\',\'rc2\')">?</button>
+            </div>
+            <div class="phrase-reason" id="rc2">Pas de sujet.</div>
+            <div class="phrase-item">
+              <span class="phrase-text">La maîtresse écrit au tableau.</span>
+              <button class="phrase-badge" data-result="ok" onclick="toggleBadge(this,\'ok\',\'rc3\')">?</button>
+            </div>
+            <div class="phrase-reason" id="rc3">✅ Sujet : <em>La maîtresse</em> · Verbe : <em>écrit</em></div>
+            <div class="phrase-item">
+              <span class="phrase-text">Un beau matin d'été.</span>
+              <button class="phrase-badge" data-result="ko" onclick="toggleBadge(this,\'ko\',\'rc4\')">?</button>
+            </div>
+            <div class="phrase-reason" id="rc4">Pas de verbe conjugué. → On peut construire : <em>Un beau matin d'été, les enfants jouèrent dehors.</em></div>
+          </div>
+        `
+      },
+      // Slide 3 — Exercices différenciés
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">✏️ Phase 5 — Exercices individuels · 17 min</div>
+          <div class="slide-h1">À vos <span>fiches !</span></div>
+          <div class="slide-sub">Distribuez les fiches par niveau</div>
+          <div class="two-col">
+            <div class="card" style="border-color:#4CAF82;background:#1A3D2E">
+              <div class="card-title" style="color:#4CAF82">🟢 CE2</div>
+              <p style="font-size:18px;line-height:1.6">① Vrai/faux : phrase complète ou pas ?<br>② Écrire 3 phrases sur la scène décrite</p>
+            </div>
+            <div class="card" style="border-color:#5B9CF6;background:#1A2A4A">
+              <div class="card-title" style="color:#5B9CF6">🔵 CM1</div>
+              <p style="font-size:18px;line-height:1.6">① Transformer des notes en phrases<br>② Écrire un paragraphe de 4-5 phrases</p>
+            </div>
+          </div>
+          <div class="card" style="border-color:#A97FF5;background:#2A1A4A;margin-bottom:16px">
+            <div class="card-title" style="color:#A97FF5">🟣 CM2</div>
+            <p style="font-size:18px;line-height:1.6">Réécrire un texte haché + ajouter 2 expansions du GN (soulignées)</p>
+          </div>
+          <div class="consigne-box" style="border-color:#F5A623;font-size:20px">⚠️ Rappel : les corrigés ne sont pas sur les fiches élèves. Passez dans les rangs pour valider.</div>
+        `
+      },
+      // Slide 4 — Bilan
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">🎯 Phase 6 — Bilan · 5 min</div>
+          <div class="slide-h1">Mise en <span>commun</span></div>
+          <div class="consigne-box" style="border-color:#5B9CF6">Un élève par niveau lit sa production. La classe valide : sujet présent ? Verbe conjugué ?</div>
+          <div class="trace-box">
+            <div class="trace-title">📝 Trace écrite commune (à noter dans le cahier)</div>
+            <div class="trace-text">Une phrase correcte contient au minimum un <strong>sujet</strong> et un <strong>verbe conjugué</strong>. Elle peut être enrichie de compléments et d'expansions du groupe nominal.</div>
+          </div>
+        `
+      }
+    ]
+  },
+
+  {
+    id: 's2',
+    date: '30',
+    month: 'Avril',
+    seance: 'S2 — La ponctuation',
+    notion: 'Au service du sens',
+    color: '#5B9CF6',
+    colorL: '#1A2A4A',
+    locked: false,
+    slides: [
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">🎯 Séance 2</div>
+          <div class="slide-h1">La ponctuation <span>au service du sens</span></div>
+          <div class="slide-sub">Jeudi 30 avril 2026 · 45 minutes</div>
+          <div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div>
+          <div class="timer-badge">⏱ Phase 1 — <a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dashed currentColor">Ma P'tite Règle ↗</a> · 5 min</div>
+          <div class="rule-box" style="background:linear-gradient(135deg,#1a1a3e,#1a1a2a);border-color:#5B9CF6">
+            <div class="rule-title" style="color:#5B9CF6">🔄 Phase 2 — Retour S1 · 3 min</div>
+            <p>Rappel rapide : qu'est-ce qu'une phrase bien construite ? 2-3 exemples oraux.</p>
+          </div>
+        `
+      },
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">📖 Phase 3 — Leçon · 10 min</div>
+          <div class="slide-h1">La ponctuation <span>change tout</span></div>
+          <div class="consigne-box" style="border-color:#5B9CF6">Lisez les deux versions. Que remarquez-vous ?</div>
+          <div class="versions-grid">
+            <div class="version-card" style="background:var(--card);border:2px solid var(--border)">
+              <div class="version-label" style="color:var(--muted)">Version A</div>
+              <div class="version-text">Venez manger les enfants !</div>
+              <div class="version-verdict" id="v1-verdict" style="color:var(--red)">😱 On va dévorer les enfants !</div>
+            </div>
+            <div class="version-card" style="background:var(--card);border:2px solid var(--border)">
+              <div class="version-label" style="color:var(--muted)">Version B</div>
+              <div class="version-text">Venez manger, les enfants !</div>
+              <div class="version-verdict" id="v2-verdict" style="color:var(--green)">✓ On appelle les enfants à table.</div>
+            </div>
+          </div>
+          <button class="btn-reveal" style="--accent-color:#5B9CF6;margin-bottom:20px" onclick="revealVersions()">💡 Révéler le sens</button>
+          <div class="trace-box">
+            <div class="trace-title">📋 Tableau des signes</div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:13px">
+              <div class="card" style="text-align:center;padding:10px 8px"><div style="font-size:72px;font-family:Caveat,cursive">.</div><div style="color:var(--muted);font-size:15px">Fin de phrase</div></div>
+              <div class="card" style="text-align:center;padding:10px 8px"><div style="font-size:72px;font-family:Caveat,cursive">,</div><div style="color:var(--muted);font-size:15px">Pause / liste</div></div>
+              <div class="card" style="text-align:center;padding:10px 8px"><div style="font-size:72px;font-family:Caveat,cursive">!</div><div style="color:var(--muted);font-size:15px">Exclamation</div></div>
+              <div class="card" style="text-align:center;padding:10px 8px"><div style="font-size:72px;font-family:Caveat,cursive">?</div><div style="color:var(--muted);font-size:15px">Question</div></div>
+              <div class="card" style="text-align:center;padding:10px 8px"><div style="font-size:72px;font-family:Caveat,cursive">:</div><div style="color:var(--muted);font-size:15px">Annonce</div></div>
+              <div class="card" style="text-align:center;padding:10px 8px"><div style="font-size:72px;font-family:Caveat,cursive">« »</div><div style="color:var(--muted);font-size:15px">Dialogue</div></div>
+              <div class="card" style="text-align:center;padding:10px 8px"><div style="font-size:72px;font-family:Caveat,cursive">—</div><div style="color:var(--muted);font-size:15px">Tour de parole</div></div>
+              <div class="card" style="text-align:center;padding:10px 8px"><div style="font-size:72px;font-family:Caveat,cursive">…</div><div style="color:var(--muted);font-size:15px">Suspension</div></div>
+            </div>
+          </div>
+        `
+      },
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">⚡ Phase 4 — Exercice collectif · 5 min</div>
+          <div class="slide-h1">Où mettre la <span>ponctuation ?</span></div>
+          <div class="consigne-box" style="border-color:#F5A623">Proposez oralement où mettre les signes. Plusieurs versions possibles !</div>
+          <div class="big-text-block">Venez manger les enfants ont faim dit la maman</div>
+          <div class="versions-grid">
+            <div class="version-card" style="background:var(--card);border:2px solid var(--border)">
+              <div class="version-label" style="color:var(--muted)">Version A</div>
+              <div class="version-text">« Venez manger, les enfants ! On a faim, dit la maman. »</div>
+              <div class="version-verdict" id="s2v1" style="color:#4CAF82">✓ Maman appelle les enfants à table.</div>
+            </div>
+            <div class="version-card" style="background:var(--card);border:2px solid var(--border)">
+              <div class="version-label" style="color:var(--muted)">Version B</div>
+              <div class="version-text">« Venez manger les enfants ! On a faim, dit la maman. »</div>
+              <div class="version-verdict" id="s2v2" style="color:#F56B6B">😱 On va dévorer les enfants !</div>
+            </div>
+          </div>
+          <div class="consigne-box" style="border-color:#5B9CF6;font-size:20px">→ Que change la virgule ? Quel est l'effet sur le sens ?</div>
+        `
+      },
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">✏️ Phase 5 — Exercices individuels · 17 min</div>
+          <div class="slide-h1">À vos <span>fiches !</span></div>
+          <div class="two-col">
+            <div class="card" style="border-color:#4CAF82;background:#1A3D2E">
+              <div class="card-title" style="color:#4CAF82">🟢 CE2</div>
+              <p style="font-size:18px;line-height:1.6">① Ponctuer un texte (points + majuscules)<br>② Écrire 2 répliques de dialogue</p>
+            </div>
+            <div class="card" style="border-color:#5B9CF6;background:#1A2A4A">
+              <div class="card-title" style="color:#5B9CF6">🔵 CM1</div>
+              <p style="font-size:18px;line-height:1.6">① Corriger un dialogue mal ponctué<br>② Écrire 4-5 répliques avec didascalies</p>
+            </div>
+          </div>
+          <div class="card" style="border-color:#A97FF5;background:#2A1A4A;margin-bottom:16px">
+            <div class="card-title" style="color:#A97FF5">🟣 CM2</div>
+            <p style="font-size:18px;line-height:1.6">① Analyser l'effet d'une ponctuation · ② Réécriture avec effet de calme</p>
+          </div>
+        `
+      },
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">🎯 Phase 6 — Bilan · 5 min</div>
+          <div class="slide-h1">Mise en <span>commun</span></div>
+          <div class="consigne-box" style="border-color:#5B9CF6">Lecture de quelques productions. Retour sur l'effet de la ponctuation sur le sens et le rythme.</div>
+          <div class="trace-box">
+            <div class="trace-title">📝 Trace écrite commune</div>
+            <div class="trace-text">La ponctuation structure le texte et guide le lecteur. Elle change le <strong>rythme</strong>, le <strong>sens</strong> et le <strong>ton</strong> d'une phrase. Bien ponctuer, c'est écrire clairement.</div>
+          </div>
+        `
+      }
+    ]
+  },
+
+  {
+    id: 's3',
+    date: '7',
+    month: 'Mai',
+    seance: 'S3 — Organiser un paragraphe',
+    notion: 'Une idée = un paragraphe',
+    color: '#4CAF82',
+    colorL: '#1A3D2E',
+    locked: false,
+    slides: [
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">🎯 Séance 3</div>
+          <div class="slide-h1">Organiser <span>un paragraphe</span></div>
+          <div class="slide-sub">Jeudi 7 mai 2026 · 45 minutes</div>
+          <div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div>
+          <div class="timer-badge">⏱ Phase 1 — Rituel · 5 min &nbsp;|&nbsp; Phase 2 — Retour S2 · 3 min</div>
+          <div class="rule-box">
+            <div class="rule-title" style="color:#4CAF82">🔄 Retour S2</div>
+            <p>Rappel : quels signes avons-nous revus ? À quoi servent les guillemets ? Les tirets ?</p>
+          </div>
+        `
+      },
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">📖 Phase 3 — Leçon · 10 min</div>
+          <div class="slide-h1">Un paragraphe = <span>une idée</span></div>
+          <div class="consigne-box" style="border-color:#4CAF82">Lisez ce texte. Est-ce facile à lire ? Pourquoi ?</div>
+          <div class="big-text-block" style="font-size:60px;text-align:left;line-height:1.8">Clara aimait les animaux. Elle avait un chien nommé Rex et un chat appelé Mimi. Rex était grand et joueur. Il adorait courir dans le jardin. Mimi, lui, préférait rester sur le canapé. Clara habitait dans une maison avec un grand jardin. Il y avait des fleurs partout. Un pommier trônait au milieu. Chaque matin, Clara donnait à manger à ses animaux avant d'aller à l'école.</div>
+          <button class="btn-reveal" style="--accent-color:#4CAF82;margin-bottom:16px" onclick="showParagraphes()">✂️ Découper en 3 paragraphes</button>
+          <div id="para-result" style="display:none">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+              <div class="card" style="border-color:#4CAF82;background:#1A3D2E"><div class="card-title" style="color:#4CAF82">§1 — Les animaux</div><p style="font-size:13px;font-style:italic">Clara / Rex / Mimi</p></div>
+              <div class="card" style="border-color:#5B9CF6;background:#1A2A4A"><div class="card-title" style="color:#5B9CF6">§2 — La maison</div><p style="font-size:13px;font-style:italic">Le jardin / les fleurs / le pommier</p></div>
+              <div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">§3 — La routine</div><p style="font-size:13px;font-style:italic">Chaque matin / donner à manger</p></div>
+            </div>
+          </div>
+          <div class="trace-box" style="margin-top:16px">
+            <div class="trace-title">📝 À retenir</div>
+            <div class="trace-text">Un paragraphe développe <strong>une seule idée</strong>. Il commence par un <strong>alinéa</strong>. On change de paragraphe quand on change d'idée.</div>
+          </div>
+        `
+      },
+      // Slide DND — Exercice interactif de classement
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">⚡ Phase 4 — Exercice collectif · 5 min</div>
+          <div class="slide-h1">Formons <span>2 paragraphes</span> ensemble</div>
+          <div class="consigne-box" style="border-color:#F5A623">Ces 6 phrases parlent de 2 sujets différents. Glissez-les dans le bon paragraphe !</div>
+          <div class="dnd-container">
+            <div>
+              <div class="dnd-source">
+                <div class="dnd-source-title">📋 Phrases à classer</div>
+                <div id="dnd-pool">
+                  <div class="dnd-item" draggable="true" data-para="merle" id="d1">Il mange des graines et des insectes.</div>
+                  <div class="dnd-item" draggable="true" data-para="merle" id="d2">Le merle est un oiseau commun en France.</div>
+                  <div class="dnd-item" draggable="true" data-para="pie" id="d3">La pie reconnaît son reflet dans un miroir.</div>
+                  <div class="dnd-item" draggable="true" data-para="merle" id="d4">Son plumage est entièrement noir.</div>
+                  <div class="dnd-item" draggable="true" data-para="pie" id="d5">C'est l'un des animaux les plus intelligents.</div>
+                  <div class="dnd-item" draggable="true" data-para="merle" id="d6">Il chante dès le lever du soleil.</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="dnd-target" id="target-merle" data-target="merle">
+                <div class="dnd-target-title" style="color:#4CAF82">🐦 §1 — Le merle</div>
+              </div>
+              <div style="height:12px"></div>
+              <div class="dnd-target" id="target-pie" data-target="pie">
+                <div class="dnd-target-title" style="color:#5B9CF6">🐦 §2 — La pie</div>
+              </div>
+            </div>
+          </div>
+          <button class="btn-reveal" style="--accent-color:#4CAF82" onclick="checkDnd()">✅ Vérifier</button>
+          <div id="dnd-feedback" class="correction-reveal"></div>
+        `
+      },
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">✏️ Phase 5 — Exercices individuels · 17 min</div>
+          <div class="slide-h1">À vos <span>fiches !</span></div>
+          <div class="two-col">
+            <div class="card" style="border-color:#4CAF82;background:#1A3D2E">
+              <div class="card-title" style="color:#4CAF82">🟢 CE2</div>
+              <p style="font-size:18px;line-height:1.6">① Découper un texte en 3 paragraphes<br>② Décrire une scène en 2 paragraphes (amorces fournies)</p>
+            </div>
+            <div class="card" style="border-color:#5B9CF6;background:#1A2A4A">
+              <div class="card-title" style="color:#5B9CF6">🔵 CM1</div>
+              <p style="font-size:18px;line-height:1.6">Texte descriptif en 3 paragraphes (personnage / lieu / routine) avec amorces</p>
+            </div>
+          </div>
+          <div class="card" style="border-color:#A97FF5;background:#2A1A4A;margin-bottom:16px">
+            <div class="card-title" style="color:#A97FF5">🟣 CM2</div>
+            <p style="font-size:18px;line-height:1.6">Même texte + <strong>phrase de cadrage temporel/spatial obligatoire</strong> en début de chaque paragraphe + 1 relative</p>
+          </div>
+        `
+      },
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">🎯 Phase 6 — Bilan · 5 min</div>
+          <div class="slide-h1">Mise en <span>commun</span></div>
+          <div class="consigne-box" style="border-color:#4CAF82">2-3 productions lues. Vérifier collectivement : une idée par paragraphe ? Alinéa présent ?</div>
+          <div class="trace-box">
+            <div class="trace-title">📝 Trace écrite commune</div>
+            <div class="trace-text">Un paragraphe développe <strong>une seule idée</strong>. Il commence par un alinéa. On change de paragraphe quand on change d'idée. Un texte bien organisé est plus facile à lire.</div>
+          </div>
+        `
+      }
+    ]
+  },
+
+  {
+    id: 's4',
+    date: '14',
+    month: 'Mai',
+    seance: 'S4 — Les connecteurs',
+    notion: 'Pour enchaîner les idées',
+    color: '#5B9CF6',
+    colorL: '#1A2A4A',
+    locked: false,
+    slides: [
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">🎯 Séance 4</div>
+          <div class="slide-h1">Les connecteurs <span>pour enchaîner</span></div>
+          <div class="slide-sub">Jeudi 14 mai 2026 · 45 minutes</div>
+          <div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div>
+          <div class="timer-badge">⏱ Phase 1 — Rituel · 5 min &nbsp;|&nbsp; Phase 2 — Retour S3 · 3 min</div>
+          <div class="rule-box">
+            <div class="rule-title" style="color:#5B9CF6">🔄 Retour S3</div>
+            <p>Rappel : qu'est-ce qu'un paragraphe ? Comment sait-on qu'on change de paragraphe ?</p>
+          </div>
+        `
+      },
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">📖 Phase 3 — Leçon · 10 min</div>
+          <div class="slide-h1">Les connecteurs : des mots pour <span>relier</span></div>
+          <div class="consigne-box" style="border-color:#5B9CF6">Comparez les deux versions. Laquelle est plus fluide ?</div>
+          <div class="versions-grid" style="margin-bottom:20px">
+            <div class="version-card" style="background:var(--card);border:2px solid var(--border)">
+              <div class="version-label" style="color:var(--muted)">Version A</div>
+              <div class="version-text">Je me suis levé. J'ai pris mon petit-déjeuner. Je suis sorti. J'ai raté le bus. Je suis arrivé en retard.</div>
+            </div>
+            <div class="version-card" style="background:var(--card);border:2px solid var(--border)">
+              <div class="version-label" style="color:var(--muted)">Version B</div>
+              <div class="version-text">D'abord, je me suis levé. Ensuite, j'ai pris mon petit-déjeuner. Puis je suis sorti, mais j'ai raté le bus. Par conséquent, je suis arrivé en retard.</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+            <div class="card"><div class="card-title" style="color:#F5A623">⏱ Temporels</div><p style="font-size:13px">d'abord, ensuite, puis, enfin, après, soudain, finalement</p></div>
+            <div class="card"><div class="card-title" style="color:#F56B6B">⚡ Cause</div><p style="font-size:13px">parce que, car, puisque</p></div>
+            <div class="card"><div class="card-title" style="color:#4CAF82">✅ Conséquence</div><p style="font-size:13px">donc, ainsi, par conséquent, c'est pourquoi</p></div>
+            <div class="card"><div class="card-title" style="color:#A97FF5">↔️ Opposition</div><p style="font-size:13px">mais, cependant, pourtant, or</p></div>
+          </div>
+        `
+      },
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">⚡ Phase 4 — Exercice collectif · 5 min</div>
+          <div class="slide-h1">Ajouter des connecteurs <span>à l'oral</span></div>
+          <div class="consigne-box" style="border-color:#F5A623">Chaque élève reprend la phrase et y ajoute un connecteur. On construit la version finale ensemble.</div>
+          <div class="steps-list">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-conn">D'abord,</div>
+              <div class="step-arrow">→</div>
+              <div class="step-phrase">Je me réveille.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-conn">Ensuite,</div>
+              <div class="step-arrow">→</div>
+              <div class="step-phrase">Je mange.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-conn">Puis</div>
+              <div class="step-arrow">→</div>
+              <div class="step-phrase">Je prends mon sac.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">4</div>
+              <div class="step-conn">Enfin,</div>
+              <div class="step-arrow">→</div>
+              <div class="step-phrase">Je pars à l'école.</div>
+            </div>
+          </div>
+          <div class="consigne-box" style="border-color:#5B9CF6;font-size:20px">→ Peut-on utiliser d'autres connecteurs ? Lesquels changerait-on et pourquoi ?</div>
+        `
+      },
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">✏️ Phase 5 — Exercices individuels · 17 min</div>
+          <div class="slide-h1">À vos <span>fiches !</span></div>
+          <div class="two-col">
+            <div class="card" style="border-color:#4CAF82;background:#1A3D2E">
+              <div class="card-title" style="color:#4CAF82">🟢 CE2</div>
+              <p style="font-size:18px;line-height:1.6">Raconter en 4 étapes avec la boîte à connecteurs : d'abord / ensuite / puis / enfin</p>
+            </div>
+            <div class="card" style="border-color:#5B9CF6;background:#1A2A4A">
+              <div class="card-title" style="color:#5B9CF6">🔵 CM1</div>
+              <p style="font-size:18px;line-height:1.6">Récit 6-8 phrases · ≥3 connecteurs temporels + ≥2 logiques (soulignés)</p>
+            </div>
+          </div>
+          <div class="card" style="border-color:#A97FF5;background:#2A1A4A;margin-bottom:16px">
+            <div class="card-title" style="color:#A97FF5">🟣 CM2</div>
+            <p style="font-size:18px;line-height:1.6">3 paragraphes · ≥5 connecteurs différents · aucun répété · chute finale inattendue</p>
+          </div>
+        `
+      },
+      {
+        html: `
+          <div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">🎯 Phase 6 — Bilan · 5 min</div>
+          <div class="slide-h1">Mise en <span>commun</span></div>
+          <div class="consigne-box" style="border-color:#5B9CF6">Un élève par niveau lit sa production. La classe repère les connecteurs à voix haute.</div>
+          <div class="trace-box">
+            <div class="trace-title">📝 Trace écrite commune</div>
+            <div class="trace-text">Les connecteurs relient les phrases et les idées. Ils indiquent l'<strong>ordre</strong> (d'abord, ensuite, enfin), la <strong>cause</strong> (parce que, car), la <strong>conséquence</strong> (donc, c'est pourquoi) ou l'<strong>opposition</strong> (mais, cependant).</div>
+          </div>
+        `
+      }
+    ]
+  },
+
+  {
+    id: 's5',
+    date: '21',
+    month: 'Mai',
+    seance: 'S5 — Substituts',
+    notion: 'Cohérence textuelle',
+    color: '#A97FF5',
+    colorL: '#2A1A4A',
+    locked: false,
+    slides: [
+      {
+        html: `<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">🎯 Séance 5</div><div class="slide-h1">Cohérence : <span>substituts et reprises</span></div><div class="slide-sub">Jeudi 21 mai 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge">⏱ Phase 1 — Rituel · 5 min &nbsp;|&nbsp; Phase 2 — Retour S4 · 3 min</div><div class="rule-box"><div class="rule-title" style="color:#A97FF5">🔄 Retour S4</div><p>Rappel : à quoi servent les connecteurs ? Donner un exemple temporel et un logique.</p></div>`
+      },
+      {
+        html: `<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">📖 Phase 3 — Leçon · 10 min</div><div class="slide-h1">Éviter les <span>répétitions</span></div><div class="consigne-box" style="border-color:#A97FF5">Qu'est-ce qui cloche dans ce texte ?</div><div class="big-text-block" style="font-size:60px;text-align:left">Le loup courut dans la forêt. <span style="color:#F56B6B">Le loup</span> aperçut <span style="color:#F5A623">un lapin</span>. <span style="color:#F56B6B">Le loup</span> bondit sur <span style="color:#F5A623">le lapin</span>. <span style="color:#F56B6B">Le loup</span> rata <span style="color:#F5A623">le lapin</span>.</div><button class="btn-reveal" style="--accent-color:#A97FF5;margin-bottom:16px" onclick="showSubstituts()">💡 Version améliorée</button><div id="sub-result" style="display:none"><div class="big-text-block" style="font-size:60px;text-align:left;border-color:#4CAF82">Le loup courut dans la forêt. <span style="color:#4CAF82">Il</span> aperçut <span style="color:#5B9CF6">un lapin</span> et bondit sur <span style="color:#5B9CF6">lui</span>. Mais <span style="color:#F5A623">la petite bête</span> fut plus rapide : <span style="color:#F5A623">elle</span> disparut dans les buissons.</div></div><div class="trace-box"><div class="trace-title">📋 3 types de substituts</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px"><div class="card" style="border-color:#4CAF82"><div class="card-title" style="color:#4CAF82">Pronom</div><p style="font-size:13px">Le loup → <em>il, lui</em></p></div><div class="card" style="border-color:#5B9CF6"><div class="card-title" style="color:#5B9CF6">Synonyme</div><p style="font-size:13px">Le lapin → <em>le rongeur</em></p></div><div class="card" style="border-color:#A97FF5"><div class="card-title" style="color:#A97FF5">Périphrase</div><p style="font-size:13px">Le loup → <em>le prédateur rusé</em></p></div></div></div>`
+      },
+      {
+        html: `<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">⚡ Phase 4 — Exercice collectif · 5 min</div><div class="slide-h1">Repérer les <span>répétitions</span></div><div class="consigne-box" style="border-color:#F5A623">Levez la main dès que vous entendez une répétition. Proposez un substitut.</div><div id="sub-phrases"><div class="phrase-item" id="sp1"><span class="phrase-text">Le loup vit un lapin.</span><button class="phrase-badge" onclick="toggleBadge(this,\'?\',\'sr1\')">?</button></div><div class="phrase-reason" id="sr1">→ Substitut pour la suite : <em>il</em></div><div class="phrase-item" id="sp2"><span class="phrase-text">Le loup courut après le lapin.</span><button class="phrase-badge" onclick="toggleBadge(this,\'?\',\'sr2\')">?</button></div><div class="phrase-reason" id="sr2">→ <em>il</em> courut après <em>lui</em></div><div class="phrase-item" id="sp3"><span class="phrase-text">Le loup attrapa le lapin.</span><button class="phrase-badge" onclick="toggleBadge(this,\'?\',\'sr3\')">?</button></div><div class="phrase-reason" id="sr3">→ <em>Le prédateur</em> attrapa <em>la petite bête</em></div><div class="phrase-item" id="sp4"><span class="phrase-text">Le loup mangea le lapin.</span><button class="phrase-badge" onclick="toggleBadge(this,\'?\',\'sr4\')">?</button></div><div class="phrase-reason" id="sr4">→ <em>Il</em> dévora <em>le rongeur</em> avec appétit.</div></div><div class="consigne-box" style="border-color:#A97FF5;font-size:20px;margin-top:16px">→ Réécrire oralement la dernière phrase avec deux substituts différents.</div>`
+      },
+      {
+        html: `<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">✏️ Phase 5 — Exercices individuels · 17 min</div><div class="slide-h1">À vos <span>fiches !</span></div><div class="two-col"><div class="card" style="border-color:#4CAF82;background:#1A3D2E"><div class="card-title" style="color:#4CAF82">🟢 CE2</div><p style="font-size:18px;line-height:1.6">① Entourer les répétitions<br>② Remplacer avec la liste de substituts fournie</p></div><div class="card" style="border-color:#5B9CF6;background:#1A2A4A"><div class="card-title" style="color:#5B9CF6">🔵 CM1</div><p style="font-size:18px;line-height:1.6">Réécrire un paragraphe sans répéter le prénom principal</p></div></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A;margin-bottom:16px"><div class="card-title" style="color:#A97FF5">🟣 CM2</div><p style="font-size:18px;line-height:1.6">Texte 10 lignes min · prénom max 2× · liste des substituts en bas</p></div>`
+      },
+      {
+        html: `<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">🎯 Phase 6 — Bilan · 5 min</div><div class="slide-h1">Mise en <span>commun</span></div><div class="consigne-box" style="border-color:#A97FF5">Lecture d'une production. La classe identifie les substituts utilisés.</div><div class="trace-box"><div class="trace-title">📝 Trace écrite commune</div><div class="trace-text">Pour éviter les répétitions : un <strong>pronom</strong> (il, elle…), un <strong>synonyme</strong>, une <strong>périphrase</strong>. Ces remplacements s'appellent des <strong>substituts</strong>. Ils assurent la cohérence du texte.</div></div>`
+      }
+    ]
+  },
+
+  {
+    id: 's6',
+    date: '28',
+    month: 'Mai',
+    seance: 'S6 — Intro & conclusion',
+    notion: 'Entrer et sortir d\'un texte',
+    color: '#4CAF82',
+    colorL: '#1A3D2E',
+    locked: false,
+    slides: [
+      { html: `<div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">🎯 Séance 6</div><div class="slide-h1">Introduction <span>et conclusion</span></div><div class="slide-sub">Jeudi 28 mai 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge">⏱ Phase 1 — Rituel · 5 min &nbsp;|&nbsp; Phase 2 — Retour S5 · 3 min</div>` },
+      { html: `<div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">📖 Phase 3 — Leçon · 10 min</div><div class="slide-h1">Comment entrer et <span>sortir d'un texte ?</span></div><div class="consigne-box" style="border-color:#4CAF82">Ce texte manque d'introduction et de conclusion. Que ressentez-vous en lisant ?</div><div class="big-text-block" style="font-size:60px;text-align:left">Il pleuvait fort ce jour-là. Les rues étaient vides. Les voitures roulaient lentement. Les passants couraient sous leurs parapluies. Les terrasses des cafés étaient désertes.</div><button class="btn-reveal" style="--accent-color:#4CAF82;margin-bottom:16px" onclick="showIntroConclusion()">💡 Version complète</button><div id="intro-result" style="display:none"><div class="two-col"><div class="card" style="border-color:#F5A623;background:#3A2A0A"><div class="card-title" style="color:#F5A623">Introduction</div><p style="font-size:13px;font-style:italic">C'était un mercredi de novembre, l'un de ces jours où le ciel semble décidé à noyer la ville.</p></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">Conclusion</div><p style="font-size:13px;font-style:italic">La ville entière avait rendu les armes face à la pluie. Et pourtant, dans une boulangerie encore ouverte, une lumière chaude brillait.</p></div></div></div>` },
+      { html: `<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">⚡ Phase 4 — Exercice collectif · 5 min</div><div class="slide-h1">Quelle intro <span>accroche le mieux ?</span></div><div class="consigne-box" style="border-color:#F5A623">👍 meilleure accroche · 👎 moins efficace. Justifiez en une phrase.</div><div class="versions-grid"><div class="version-card" style="background:var(--card);border:2px solid var(--border)"><div class="version-label" style="color:var(--muted)">Intro A</div><div class="version-text">Il était une fois un garçon.</div><div class="version-verdict" id="ia-v" style="color:var(--red)">Trop vague, donne peu envie de lire.</div></div><div class="version-card" style="background:var(--card);border:2px solid var(--border)"><div class="version-label" style="color:var(--muted)">Intro B</div><div class="version-text">Cette nuit-là, quelque chose d'étrange se produisit dans la chambre de Tom.</div><div class="version-verdict" id="ib-v" style="color:var(--green)">✓ Mystère, cadre précis, personnage nommé.</div></div></div><button class="btn-reveal" style="--accent-color:#4CAF82;margin-bottom:16px" onclick="revealIntroVerdicts()">💡 Révéler les analyses</button><div class="consigne-box" style="border-color:#4CAF82;font-size:20px">→ Même exercice avec deux conclusions : laquelle ouvre sur une idée nouvelle ?</div>` },
+      { html: `<div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">✏️ Phase 5 — Exercices individuels · 17 min</div><div class="slide-h1">À vos <span>fiches !</span></div><div class="two-col"><div class="card" style="border-color:#4CAF82;background:#1A3D2E"><div class="card-title" style="color:#4CAF82">🟢 CE2</div><p style="font-size:18px;line-height:1.6">① Choisir la meilleure introduction parmi 3<br>② Écrire 1-2 phrases de conclusion</p></div><div class="card" style="border-color:#5B9CF6;background:#1A2A4A"><div class="card-title" style="color:#5B9CF6">🔵 CM1</div><p style="font-size:18px;line-height:1.6">Écrire une introduction (2-3 phrases) pour un développement donné</p></div></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A;margin-bottom:16px"><div class="card-title" style="color:#A97FF5">🟣 CM2</div><p style="font-size:18px;line-height:1.6">Texte complet : intro (accroche) + 2§ + conclusion (effet final)</p></div>` },
+      { html: `<div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">🎯 Phase 6 — Bilan · 5 min</div><div class="slide-h1">Mise en <span>commun</span></div><div class="trace-box"><div class="trace-title">📝 Trace écrite commune</div><div class="trace-text">L'<strong>introduction</strong> présente le cadre et accroche le lecteur. La <strong>conclusion</strong> clôt le texte et peut ouvrir sur une idée nouvelle. Un texte bien structuré a un début, un milieu et une fin.</div></div>` }
+    ]
+  },
+
+  {
+    id: 's7',
+    date: '4',
+    month: 'Juin',
+    seance: 'S7 — Réviser son texte',
+    notion: 'Avec des critères explicites',
+    color: '#5B9CF6',
+    colorL: '#1A2A4A',
+    locked: false,
+    slides: [
+      { html: `<div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">🎯 Séance 7</div><div class="slide-h1">Réviser son texte <span>avec des critères</span></div><div class="slide-sub">Jeudi 4 juin 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge">⏱ Phase 1 — Rituel · 5 min &nbsp;|&nbsp; Phase 2 — Retour S6 · 3 min</div><div class="rule-box"><div class="rule-title" style="color:#5B9CF6">🔄 Retour S6</div><p>Rappel : qu'est-ce qu'une introduction efficace ? Une conclusion ? Quand doit-on changer de paragraphe ?</p></div>` },
+      {
+        html: `<div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">📖 Phase 3 — Leçon · 10 min</div><div class="slide-h1">Réviser, c'est <span>relire avec méthode</span></div>
+        <div class="consigne-box" style="border-color:#5B9CF6">Qu'est-ce qui ne va pas dans ce texte ? Listez oralement les problèmes.</div>
+        <div class="big-text-block" style="font-size:60px;text-align:left">il etait une fois un garçon le garçon s'appelait Tom Tom aimait les animaux Tom avait un chien le chien etait grand le chien courait partout Tom courait avec le chien ils etaient heureux</div>
+        <table class="criteria-table">
+          <thead><tr><th>Critère</th><th>Dans ce texte</th></tr></thead>
+          <tbody>
+            <tr><td>Phrases complètes ?</td><td><span class="crit-badge crit-ok">✓</span></td></tr>
+            <tr><td>Ponctuation ?</td><td><span class="crit-badge crit-ko">✗</span></td></tr>
+            <tr><td>Majuscules ?</td><td><span class="crit-badge crit-ko">✗</span></td></tr>
+            <tr><td>Répétitions ?</td><td><span class="crit-badge crit-ko">✗</span></td></tr>
+          </tbody>
+        </table>
+        <button class="btn-reveal" style="--accent-color:#5B9CF6" onclick="showTextCorrige()">✅ Version corrigée</button>
+        <div id="texte-corrige" class="correction-reveal">Il était une fois un garçon qui s'appelait Tom. Il aimait les animaux. Il avait un grand chien qui courait partout. Ensemble, ils étaient heureux.</div>`
+      },
+      {
+        html: `<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">⚡ Phase 4 — Exercice collectif · 5 min</div><div class="slide-h1">Révisons <span>ce texte ensemble</span></div>
+        <div class="consigne-box" style="border-color:#F5A623">Pour chaque critère, dites : validé ✓ ou à corriger ✗ ? Cliquez pour révéler.</div>
+        <div class="big-text-block" style="font-size:60px;text-align:left;margin-bottom:16px">il etait une fois un garçon le garçon s'appelait Tom Tom aimait les animaux Tom avait un chien le chien etait grand le chien courait partout Tom courait avec le chien ils etaient heureux</div>
+        <table class="criteria-table">
+          <thead><tr><th>Critère</th><th>Résultat</th></tr></thead>
+          <tbody>
+            <tr><td>Phrases complètes ?</td><td><span class="crit-badge crit-pending" onclick="this.className='crit-badge crit-ok';this.textContent='✓'">?</span></td></tr>
+            <tr><td>Ponctuation correcte ?</td><td><span class="crit-badge crit-pending" onclick="this.className='crit-badge crit-ko';this.textContent='✗'">?</span></td></tr>
+            <tr><td>Majuscules présentes ?</td><td><span class="crit-badge crit-pending" onclick="this.className='crit-badge crit-ko';this.textContent='✗'">?</span></td></tr>
+            <tr><td>Répétitions évitées ?</td><td><span class="crit-badge crit-pending" onclick="this.className='crit-badge crit-ko';this.textContent='✗'">?</span></td></tr>
+          </tbody>
+        </table>
+        <div class="consigne-box" style="border-color:#5B9CF6;font-size:20px;margin-top:16px">→ Chacun va maintenant appliquer cette grille à son propre texte (S4 ou S5).</div>`
+      },
+      { html: `<div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">✏️ Phase 5 — Exercices individuels · 17 min</div><div class="slide-h1">À vos <span>fiches !</span></div><div class="two-col"><div class="card" style="border-color:#4CAF82;background:#1A3D2E"><div class="card-title" style="color:#4CAF82">🟢 CE2</div><p style="font-size:18px;line-height:1.6">Grille 3 critères, relecture guidée (binôme ou enseignant)</p></div><div class="card" style="border-color:#5B9CF6;background:#1A2A4A"><div class="card-title" style="color:#5B9CF6">🔵 CM1</div><p style="font-size:18px;line-height:1.6">Grille 5 critères : seul puis échange binôme</p></div></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">🟣 CM2</div><p style="font-size:18px;line-height:1.6">Grille 6 critères + critère de style personnel (registre / effet / vocabulaire) · Réécriture intégrale</p></div>` },
+      { html: `<div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">🎯 Phase 6 — Bilan · 5 min</div><div class="slide-h1">Mise en <span>commun</span></div><div class="consigne-box" style="border-color:#5B9CF6">Quels critères avez-vous le plus souvent corrigés ?</div><div class="trace-box"><div class="trace-title">📝 Trace écrite commune</div><div class="trace-text">Réviser un texte, c'est le relire avec des critères précis : phrases complètes, ponctuation, paragraphes, pas de répétitions. La révision fait partie de l'écriture : tout auteur retravaille ses textes.</div></div>` }
+    ]
+  },
+
+  {
+    id: 's8',
+    date: '11',
+    month: 'Juin',
+    seance: 'S8 — Écriture longue',
+    notion: 'Intégration de toutes les compétences',
+    color: '#A97FF5',
+    colorL: '#2A1A4A',
+    locked: false,
+    slides: [
+      { html: `<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">🎯 Séance 8</div><div class="slide-h1">Écriture longue : <span>tout ensemble</span></div><div class="slide-sub">Jeudi 11 juin 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge">⏱ Phase 1 — Rituel · 5 min &nbsp;|&nbsp; Phase 2 — Retour S7 · 3 min</div><div class="rule-box"><div class="rule-title" style="color:#A97FF5">🔄 Retour S7</div><p>Rappel de la grille de révision. Annoncer l'enjeu : aujourd'hui, tout se mobilise dans un texte plus long.</p></div>` },
+      {
+        html: `<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">⚡ Phase 3+4 — Leçon + Planification collective · 15 min</div><div class="slide-h1">Avant d'écrire, <span>je planifie</span></div>
+        <div class="consigne-box" style="border-color:#F5A623">Répondez à ces 3 questions sur votre brouillon (1 ligne chacune). 2-3 élèves partagent à l'oral.</div>
+        <div class="plan-questions">
+          <div class="plan-q">
+            <div class="plan-q-num">Question 1</div>
+            <div class="plan-q-text">Quel est mon sujet ou mon personnage principal ?</div>
+            <div class="plan-q-ex">Ex. : "Une fille qui découvre une porte secrète dans son jardin."</div>
+          </div>
+          <div class="plan-q">
+            <div class="plan-q-num">Question 2</div>
+            <div class="plan-q-text">Combien de parties dans mon texte ? Quelle idée dans chacune ?</div>
+            <div class="plan-q-ex">Ex. : "3 parties : découverte / exploration / retour."</div>
+          </div>
+          <div class="plan-q">
+            <div class="plan-q-num">Question 3</div>
+            <div class="plan-q-text">Comment vais-je commencer ma première phrase ?</div>
+            <div class="plan-q-ex">Ex. : "Ce matin-là, Inès remarqua quelque chose d'étrange…"</div>
+          </div>
+        </div>`
+      },
+      { html: `<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">✏️ Phase 5 — Écriture individuelle · 25 min</div><div class="slide-h1">À vos <span>cahiers !</span></div><div class="two-col"><div class="card" style="border-color:#4CAF82;background:#1A3D2E"><div class="card-title" style="color:#4CAF82">🟢 CE2 — 8-10 lignes</div><p style="font-size:18px;line-height:1.6">Sujet : <em>Une journée dans la forêt</em><br>Plan + amorces fournis sur la fiche<br>Liste de mots disponibles</p></div><div class="card" style="border-color:#5B9CF6;background:#1A2A4A"><div class="card-title" style="color:#5B9CF6">🔵 CM1 — 12-15 lignes</div><p style="font-size:18px;line-height:1.6">3 sujets au choix (récit / animal / documentaire)<br>Plan à construire seul au brouillon</p></div></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">🟣 CM2 — 15-20 lignes</div><p style="font-size:18px;line-height:1.6">Sujet libre + contrainte au choix : A) registres · B) dialogue · C) description</p></div>` },
+      { html: `<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">🎯 Phase 6 — Autoévaluation + Partage · 5 min</div><div class="slide-h1">Autoévaluation <span>et partage</span></div><div class="consigne-box" style="border-color:#A97FF5">Relisez avec la grille de S7. Entourez en vert ce dont vous êtes fier·e.</div><div class="trace-box"><div class="trace-title">📝 Trace écrite finale de la progression</div><div class="trace-text">Pour écrire un bon texte : construire des <strong>phrases complètes</strong>, bien <strong>ponctuer</strong>, organiser en <strong>paragraphes</strong>, utiliser des <strong>connecteurs</strong>, éviter les <strong>répétitions</strong>, soigner l'<strong>introduction</strong> et la <strong>conclusion</strong>. Écrire, c'est aussi relire et améliorer.</div></div>` }
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════
+  // VOCABULAIRE — VENDREDIS P5
+  // ══════════════════════════════════════════════════════════
+
+  // V1 — SYNONYMES — 24 avril
+  {
+    id:'v1', date:'24', month:'Avril',
+    seance:'V1 — Les synonymes',
+    notion:'Des mots de sens proche',
+    color:'#2DD4BF', colorL:'#0A2A28', locked:false,
+    slides:[
+      { html:`<div class="slide-phase" style="--phase-color:#2DD4BF;--phase-bg:#0A2A28">📚 Vocabulaire — Séance 1</div><div class="slide-h1">Les <span>synonymes</span></div><div class="slide-sub">Vendredi 24 avril 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge" style="background:#0A2A28;border-color:#2DD4BF;color:#2DD4BF">⏱ Phase 1 — <a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dashed currentColor">Ma P'tite Règle ↗</a> · 5 min</div><div class="rule-box" style="background:linear-gradient(135deg,#0A2A28,#0a1a18);border-color:#2DD4BF"><div class="rule-title" style="color:#2DD4BF">📋 Structure</div><p>① Rituel (5 min) · ② Leçon collective (15 min) · ③ Exercices différenciés (20 min) · ④ Mise en commun (5 min)</p></div><div class="rule-box" style="background:linear-gradient(135deg,#1a1a3e,#1a1a2a);border-color:#5B9CF6"><div class="rule-title" style="color:#5B9CF6">🎮 Ma P'tite Règle</div><p><a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:#5B9CF6;font-weight:800;text-decoration:none;border-bottom:2px solid #5B9CF6">5ilv1.github.io/ma-ptite-regle ↗</a>&nbsp;&nbsp;<a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#1A2A4A;border:2px solid #5B9CF6;color:#5B9CF6;padding:6px 16px;border-radius:8px;font-weight:800;font-size:16px;text-decoration:none;vertical-align:middle;margin-left:10px">🚀 Ouvrir</a></p></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#2DD4BF;--phase-bg:#0A2A28">📖 Phase 2 — Leçon · 15 min</div><div class="slide-h1">Des mots qui se <span>ressemblent par le sens</span></div><div class="consigne-box" style="border-color:#2DD4BF">Ces mots veulent dire la même chose. Mais sont-ils vraiment identiques ?</div><table class="reg-table"><thead><tr><th style="background:#0A2A28;color:#2DD4BF">Mot de base</th><th style="background:#1A2A4A;color:#5B9CF6">Synonyme courant</th><th style="background:#2A1A4A;color:#A97FF5">Synonyme soutenu</th></tr></thead><tbody><tr><td style="background:#0A2A28;color:#2DD4BF">marcher</td><td style="background:#1A2A4A;color:#5B9CF6">se promener</td><td style="background:#2A1A4A;color:#A97FF5">déambuler</td></tr><tr><td style="background:#0A2A28;color:#2DD4BF">content</td><td style="background:#1A2A4A;color:#5B9CF6">heureux</td><td style="background:#2A1A4A;color:#A97FF5">ravi</td></tr><tr><td style="background:#0A2A28;color:#2DD4BF">maison</td><td style="background:#1A2A4A;color:#5B9CF6">habitation</td><td style="background:#2A1A4A;color:#A97FF5">demeure</td></tr><tr><td style="background:#0A2A28;color:#2DD4BF">regarder</td><td style="background:#1A2A4A;color:#5B9CF6">observer</td><td style="background:#2A1A4A;color:#A97FF5">contempler</td></tr></tbody></table><div class="trace-box" style="border-color:#2DD4BF"><div class="trace-title" style="color:#2DD4BF">📝 À retenir</div><div class="trace-text">Des <strong>synonymes</strong> ont un sens proche mais pas identique. On les choisit selon le contexte et le registre.</div></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">⚡ Phase 2 suite — Collectif · 5 min</div><div class="slide-h1">Trouve un synonyme du mot <span>souligné</span></div><div class="consigne-box" style="border-color:#F5A623">Pour chaque phrase, proposez un synonyme du mot souligné. Cliquez pour révéler la réponse.</div><div class="phrase-item"><span class="phrase-text">Le roi habitait dans une belle <u><strong>maison</strong></u>.</span><button class="phrase-badge" data-result="ok" onclick="toggleBadge(this,'ok','rs1')">?</button></div><div class="phrase-reason" id="rs1">✓ <strong>demeure</strong> — registre soutenu, adapté à un roi. Aussi : <em>résidence, habitation.</em></div><div class="phrase-item"><span class="phrase-text">Il <u><strong>marchait</strong></u> sans but dans les rues.</span><button class="phrase-badge" data-result="ok" onclick="toggleBadge(this,'ok','rs2')">?</button></div><div class="phrase-reason" id="rs2">✓ <strong>déambulait</strong> = flânait sans direction précise. Aussi : <em>se promenait, errait.</em></div><div class="phrase-item"><span class="phrase-text">Je suis <u><strong>content</strong></u> de te revoir.</span><button class="phrase-badge" data-result="ok" onclick="toggleBadge(this,'ok','rs3')">?</button></div><div class="phrase-reason" id="rs3">✓ <strong>ravi</strong> (joie plus intense), <strong>heureux</strong>, <strong>enchanté</strong>. Le choix dépend de l'intensité voulue.</div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#2DD4BF;--phase-bg:#0A2A28">✏️ Phase 3 — Exercices · 20 min</div><div class="slide-h1">À vos <span>fiches !</span></div><div class="two-col"><div class="card" style="border-color:#4CAF82;background:#1A3D2E"><div class="card-title" style="color:#4CAF82">🟢 CE2</div><p style="font-size:18px;line-height:1.6">① Relier chaque mot à son synonyme (colonne droite mélangée)<br>② Entourer le synonyme du mot <u>souligné</u> dans la phrase<br>③ Écrire une phrase avec un synonyme proposé</p></div><div class="card" style="border-color:#5B9CF6;background:#1A2A4A"><div class="card-title" style="color:#5B9CF6">🔵 CM1</div><p style="font-size:18px;line-height:1.6">Mêmes exercices + 2 mots et 2 phrases supplémentaires</p></div></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">🟣 CM2</div><p style="font-size:18px;line-height:1.6">Mêmes exercices + encore 2 mots et 2 phrases · Ex 3 : 4 synonymes à employer</p></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#2DD4BF;--phase-bg:#0A2A28">🎯 Phase 4 — Bilan · 5 min</div><div class="slide-h1">Mise en <span>commun</span></div><div class="consigne-box" style="border-color:#2DD4BF">Un élève par niveau lit sa réponse. La classe valide : le synonyme change-t-il le sens ? Le registre ?</div><div class="trace-box" style="border-color:#2DD4BF"><div class="trace-title" style="color:#2DD4BF">📝 Trace écrite commune</div><div class="trace-text">Les <strong>synonymes</strong> sont des mots de sens proche. On les choisit selon le contexte et le registre. Ex : <em>content — heureux — ravi · marcher — se promener — déambuler.</em></div></div>` }
+    ]
+  },
+
+  // V2 — CONTRAIRES — 22 mai
+  {
+    id:'v2', date:'22', month:'Mai',
+    seance:'V2 — Les contraires',
+    notion:'Antonymes : par le sens ou par préfixe',
+    color:'#F472B6', colorL:'#2A0A1A', locked:false,
+    slides:[
+      { html:`<div class="slide-phase" style="--phase-color:#F472B6;--phase-bg:#2A0A1A">📚 Vocabulaire — Séance 2</div><div class="slide-h1">Les <span>contraires</span></div><div class="slide-sub">Vendredi 22 mai 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge" style="background:#2A0A1A;border-color:#F472B6;color:#F472B6">⏱ Phase 1 — <a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dashed currentColor">Ma P'tite Règle ↗</a> · 5 min</div><div class="rule-box" style="background:#2A0A1A;border-color:#F472B6"><div class="rule-title" style="color:#F472B6">🔄 Retour V1</div><p>Qu'est-ce qu'un synonyme ? Donner 2 exemples. Quelle différence entre <em>content</em> et <em>ravi</em> ?</p></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#F472B6;--phase-bg:#2A0A1A">📖 Phase 2 — Leçon · 15 min</div><div class="slide-h1">Deux façons de former <span>un contraire</span></div><div class="two-col"><div class="card" style="border-color:#F472B6;background:#2A0A1A"><div class="card-title" style="color:#F472B6">1️⃣ Par le sens</div><p style="font-family:Caveat,cursive;font-size:42px;line-height:1.8">grand ↔ petit<br>chaud ↔ froid<br>monter ↔ descendre<br>aimer ↔ détester</p></div><div class="card" style="border-color:#F5A623;background:#3A2A0A"><div class="card-title" style="color:#F5A623">2️⃣ Par un préfixe</div><p style="font-family:Caveat,cursive;font-size:42px;line-height:1.8">possible → <strong>im</strong>possible<br>heureux → <strong>mal</strong>heureux<br>faire → <strong>dé</strong>faire<br>connu → <strong>in</strong>connu</p></div></div><div class="trace-box" style="border-color:#F472B6"><div class="trace-title" style="color:#F472B6">📝 À retenir</div><div class="trace-text">Un <strong>antonyme</strong> est le contraire d'un mot. On le forme par le sens (<em>grand ↔ petit</em>) ou avec un préfixe : <em>in-, im-, dé-, mal-, mé-.</em></div></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">⚡ Phase 2 suite — Collectif · 5 min</div><div class="slide-h1">Vrai contraire <span>ou pas ?</span></div><div class="consigne-box" style="border-color:#F5A623">Cliquez pour révéler si c'est un vrai antonyme.</div><div class="phrase-item"><span class="phrase-text">jour ↔ nuit</span><button class="phrase-badge" data-result="ok" onclick="toggleBadge(this,'ok','rc1v')">?</button></div><div class="phrase-reason" id="rc1v">✓ Vrai antonyme par le sens.</div><div class="phrase-item"><span class="phrase-text">chien ↔ chat</span><button class="phrase-badge" data-result="ko" onclick="toggleBadge(this,'ko','rc2v')">?</button></div><div class="phrase-reason" id="rc2v">✗ Pas des contraires — juste deux animaux différents.</div><div class="phrase-item"><span class="phrase-text">obéissant ↔ désobéissant</span><button class="phrase-badge" data-result="ok" onclick="toggleBadge(this,'ok','rc3v')">?</button></div><div class="phrase-reason" id="rc3v">✓ Contraire formé avec le préfixe <em>dé-</em>.</div><div class="phrase-item"><span class="phrase-text">rapide ↔ lent</span><button class="phrase-badge" data-result="ok" onclick="toggleBadge(this,'ok','rc4v')">?</button></div><div class="phrase-reason" id="rc4v">✓ Vrai antonyme par le sens. <em>Irrapide</em> n'existe pas !</div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#F472B6;--phase-bg:#2A0A1A">✏️ Phase 3 — Exercices · 20 min</div><div class="slide-h1">À vos <span>fiches !</span></div><div class="two-col"><div class="card" style="border-color:#4CAF82;background:#1A3D2E"><div class="card-title" style="color:#4CAF82">🟢 CE2</div><p style="font-size:18px;line-height:1.6">① Relier 6 mots à leur contraire (liste fournie)<br>② Écrire le contraire de 5 mots avec un préfixe (in-, dé-, mal-)</p></div><div class="card" style="border-color:#5B9CF6;background:#1A2A4A"><div class="card-title" style="color:#5B9CF6">🔵 CM1</div><p style="font-size:18px;line-height:1.6">① Trouver le contraire de 8 mots + préciser : par le sens ou par préfixe<br>② Réécrire 3 phrases en remplaçant un mot par son antonyme</p></div></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">🟣 CM2</div><p style="font-size:18px;line-height:1.6">① Classer 10 antonymes selon leur mode de formation<br>② Écrire 3 phrases contenant un mot et son contraire dans la même phrase</p></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#F472B6;--phase-bg:#2A0A1A">🎯 Phase 4 — Bilan · 5 min</div><div class="slide-h1">Mise en <span>commun</span></div><div class="consigne-box" style="border-color:#F472B6">CM2 : lire 1-2 phrases avec mot + contraire dans la même phrase.</div><div class="trace-box" style="border-color:#F472B6"><div class="trace-title" style="color:#F472B6">📝 Trace écrite commune</div><div class="trace-text">Un <strong>antonyme</strong> est le contraire d'un mot. On le forme par le sens (<em>grand ↔ petit</em>) ou par un préfixe (<em>possible → impossible · faire → défaire</em>).</div></div>` }
+    ]
+  },
+
+  // V3 — FAMILLES DE MOTS — 29 mai
+  {
+    id:'v3', date:'29', month:'Mai',
+    seance:'V3 — Les familles de mots',
+    notion:'Le radical commun',
+    color:'#4CAF82', colorL:'#1A3D2E', locked:false,
+    slides:[
+      { html:`<div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">📚 Vocabulaire — Séance 3</div><div class="slide-h1">Familles de mots : <span>le radical</span></div><div class="slide-sub">Vendredi 29 mai 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge" style="background:#1A3D2E;border-color:#4CAF82;color:#4CAF82">⏱ Phase 1 — <a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dashed currentColor">Ma P'tite Règle ↗</a> · 5 min</div><div class="rule-box" style="border-color:#4CAF82"><div class="rule-title" style="color:#4CAF82">🔄 Retour V2</div><p>Deux façons de former un contraire — donner 1 exemple de chaque.</p></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">📖 Phase 2 — Leçon · 15 min</div><div class="slide-h1">Une famille = <span>un radical commun</span></div><div class="consigne-box" style="border-color:#4CAF82">Tous ces mots ont un radical commun. Trouvez-le !</div><div style="text-align:center;margin-bottom:14px"><span class="morpho-word"><span class="morpho-seul">port</span><span class="morpho-suffix">er</span></span><span class="morpho-word"><span class="morpho-prefix">im</span><span class="morpho-radical">port</span><span class="morpho-suffix">ation</span></span><span class="morpho-word"><span class="morpho-prefix">ex</span><span class="morpho-radical">port</span><span class="morpho-suffix">er</span></span><span class="morpho-word"><span class="morpho-radical">port</span><span class="morpho-suffix">eur</span></span></div><div style="text-align:center;margin-bottom:14px;font-size:16px;color:var(--muted)">Radical commun : <span style="color:#2DD4BF;font-family:Caveat,cursive;font-size:44px;font-weight:700">port</span> → idée de « transporter »</div><div class="two-col"><div class="card" style="border-color:#4CAF82;background:#1A3D2E"><div class="card-title" style="color:#4CAF82">Famille de <em>terre</em></div><p style="font-family:Caveat,cursive;font-size:36px;line-height:1.8">territoire · terrestre · enterrer · atterrir · terrain</p></div><div class="card" style="border-color:#5B9CF6;background:#1A2A4A"><div class="card-title" style="color:#5B9CF6">Famille de <em>voir</em></div><p style="font-family:Caveat,cursive;font-size:36px;line-height:1.8">visible · invisible · prévoir · revoir · visuel</p></div></div><div class="trace-box" style="border-color:#4CAF82"><div class="trace-title" style="color:#4CAF82">📝 À retenir</div><div class="trace-text">Une <strong>famille de mots</strong> regroupe des mots qui partagent le même <strong>radical</strong> et ont un sens lié. Attention aux faux amis : <em>terrible</em> n'est pas dans la famille de <em>terre</em> !</div></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">⚡ Phase 2 suite — Collectif · 5 min</div><div class="slide-h1">Trouve <span>l'intrus</span> !</div><div class="consigne-box" style="border-color:#F5A623">Un mot ne fait pas partie de la famille. Lequel ? Cliquez pour révéler.</div><div class="phrase-item"><span class="phrase-text">chat — chaton — château — chatière</span><button class="phrase-badge" data-result="ko" onclick="toggleBadge(this,'ko','ri1v')">?</button></div><div class="phrase-reason" id="ri1v">Intrus : <strong>château</strong> — vient du latin <em>castrum</em>, pas de <em>chat</em>.</div><div class="phrase-item"><span class="phrase-text">laver — lavable — lavande — laverie</span><button class="phrase-badge" data-result="ko" onclick="toggleBadge(this,'ko','ri2v')">?</button></div><div class="phrase-reason" id="ri2v">Intrus : <strong>lavande</strong> — c'est une plante, pas un dérivé de l'action de laver.</div><div class="phrase-item"><span class="phrase-text">terrestre — territoire — terrible — terrain</span><button class="phrase-badge" data-result="ko" onclick="toggleBadge(this,'ko','ri3v')">?</button></div><div class="phrase-reason" id="ri3v">Intrus : <strong>terrible</strong> — vient du latin <em>terror</em> (peur), pas de <em>terra</em> (terre).</div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">✏️ Phase 3 — Exercices · 20 min</div><div class="slide-h1">À vos <span>fiches !</span></div><div class="two-col"><div class="card" style="border-color:#4CAF82;background:#1A3D2E"><div class="card-title" style="color:#4CAF82">🟢 CE2</div><p style="font-size:18px;line-height:1.6">① Souligner le radical commun dans 4 familles de mots<br>② Trouver 2 mots de la famille de : <em>mer, jour, livre</em></p></div><div class="card" style="border-color:#5B9CF6;background:#1A2A4A"><div class="card-title" style="color:#5B9CF6">🔵 CM1</div><p style="font-size:18px;line-height:1.6">① Trouver l'intrus dans 3 familles + justification<br>② Construire la famille complète de <em>port</em> et <em>form</em> (4 mots min. chacun)</p></div></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">🟣 CM2</div><p style="font-size:18px;line-height:1.6">① Famille de <em>vie</em> et <em>main</em> avec classe grammaticale de chaque mot<br>② Deviner le sens de <em>vivipare</em> et <em>manutention</em> par le radical — justification</p></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#4CAF82;--phase-bg:#1A3D2E">🎯 Phase 4 — Bilan · 5 min</div><div class="slide-h1">Mise en <span>commun</span></div><div class="consigne-box" style="border-color:#4CAF82">CM2 : comment avez-vous deviné le sens de <em>vivipare</em> et <em>manutention</em> ?</div><div class="trace-box" style="border-color:#4CAF82"><div class="trace-title" style="color:#4CAF82">📝 Trace écrite commune</div><div class="trace-text">Une <strong>famille de mots</strong> regroupe des mots avec le même <strong>radical</strong> et un sens lié. Le radical aide à comprendre des mots inconnus. Ex : <em>port → porter, importation, exporteur · terre → terrain, terrestre, enterrer.</em></div></div>` }
+    ]
+  },
+
+  // V4 — PRÉFIXES ET SUFFIXES — 5 juin
+  {
+    id:'v4', date:'5', month:'Juin',
+    seance:'V4 — Préfixes et suffixes',
+    notion:'Décomposer pour comprendre',
+    color:'#F5A623', colorL:'#3A2A0A', locked:false,
+    slides:[
+      { html:`<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">📚 Vocabulaire — Séance 4</div><div class="slide-h1">Préfixes et <span>suffixes</span></div><div class="slide-sub">Vendredi 5 juin 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge">⏱ Phase 1 — <a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dashed currentColor">Ma P'tite Règle ↗</a> · 5 min</div><div class="rule-box" style="border-color:#F5A623"><div class="rule-title" style="color:#F5A623">🔄 Retour V3</div><p>Qu'est-ce qu'un radical ? Donner un exemple de famille de mots. Comment le radical aide-t-il à comprendre un mot inconnu ?</p></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">📖 Phase 2 — Leçon · 15 min</div><div class="slide-h1">Avant et après <span>le radical</span></div><div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:16px"><div style="background:#3A2A0A;border:2px solid #F5A623;color:#F5A623;padding:10px 16px;border-radius:10px;text-align:center"><div style="font-size:15px;font-weight:800">PRÉFIXE</div><div style="font-size:12px;margin-top:4px">avant · modifie le sens</div></div><div style="font-size:26px;color:var(--muted)">+</div><div style="background:var(--teal-l);border:2px solid var(--teal);color:var(--teal);padding:10px 16px;border-radius:10px;text-align:center"><div style="font-size:15px;font-weight:800">RADICAL</div><div style="font-size:12px;margin-top:4px">sens de base</div></div><div style="font-size:26px;color:var(--muted)">+</div><div style="background:var(--purple-l);border:2px solid var(--purple);color:var(--purple);padding:10px 16px;border-radius:10px;text-align:center"><div style="font-size:15px;font-weight:800">SUFFIXE</div><div style="font-size:12px;margin-top:4px">après · change la classe</div></div></div><div class="two-col"><div class="card" style="border-color:#F5A623;background:#3A2A0A"><div class="card-title" style="color:#F5A623">Préfixes fréquents</div><p style="font-family:Caveat,cursive;font-size:36px;line-height:1.9"><span style="color:#F5A623">re-</span> refaire · <span style="color:#F5A623">dé-</span> défaire<br><span style="color:#F5A623">in-/im-</span> invisible · impossible<br><span style="color:#F5A623">pré-</span> prévoir · <span style="color:#F5A623">sur-</span> survoler</p></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">Suffixes fréquents</div><p style="font-family:Caveat,cursive;font-size:36px;line-height:1.9"><span style="color:#A97FF5">-eur/-euse</span> coiffeur<br><span style="color:#A97FF5">-tion</span> observation<br><span style="color:#A97FF5">-able</span> lavable<br><span style="color:#A97FF5">-ment</span> doucement</p></div></div><div class="trace-box" style="border-color:#F5A623"><div class="trace-title" style="color:#F5A623">📝 À retenir</div><div class="trace-text">Un <strong>préfixe</strong> avant le radical modifie le sens. Un <strong>suffixe</strong> après change la classe grammaticale : <em>observer (verbe) → observation (nom) → observable (adjectif).</em></div></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">⚡ Phase 2 suite — Collectif · 5 min</div><div class="slide-h1">Décomposer pour <span>comprendre</span></div><div class="consigne-box" style="border-color:#F5A623">Décomposez ces mots et devinez leur sens. Cliquez pour vérifier.</div><div class="phrase-item"><span class="phrase-text">im-port-ation</span><button class="phrase-badge" data-result="ok" onclick="toggleBadge(this,'ok','rd1v')">?</button></div><div class="phrase-reason" id="rd1v"><span style="color:#F5A623">im-</span> (vers l'intérieur) + <span style="color:#2DD4BF">port</span> (transporter) + <span style="color:#A97FF5">-ation</span> (action) → faire entrer des marchandises.</div><div class="phrase-item"><span class="phrase-text">dé-forest-ation</span><button class="phrase-badge" data-result="ok" onclick="toggleBadge(this,'ok','rd2v')">?</button></div><div class="phrase-reason" id="rd2v"><span style="color:#F5A623">dé-</span> (suppression) + <span style="color:#2DD4BF">forest</span> (forêt) + <span style="color:#A97FF5">-ation</span> (action) → destruction des forêts.</div><div class="phrase-item"><span class="phrase-text">in-croyable</span><button class="phrase-badge" data-result="ok" onclick="toggleBadge(this,'ok','rd3v')">?</button></div><div class="phrase-reason" id="rd3v"><span style="color:#F5A623">in-</span> (négation) + <span style="color:#2DD4BF">croi</span> (croire) + <span style="color:#A97FF5">-able</span> (qui peut être) → qui ne peut pas être cru.</div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">✏️ Phase 3 — Exercices · 20 min</div><div class="slide-h1">À vos <span>fiches !</span></div><div class="two-col"><div class="card" style="border-color:#4CAF82;background:#1A3D2E"><div class="card-title" style="color:#4CAF82">🟢 CE2</div><p style="font-size:18px;line-height:1.6">① Entourer le préfixe en orange, souligner le suffixe en violet (5 mots donnés)<br>② Ajouter un préfixe ou suffixe pour former un nouveau mot</p></div><div class="card" style="border-color:#5B9CF6;background:#1A2A4A"><div class="card-title" style="color:#5B9CF6">🔵 CM1</div><p style="font-size:18px;line-height:1.6">① Décomposer 5 mots complexes + indiquer la classe grammaticale<br>② Former 4 mots en combinant préfixes et radicaux proposés</p></div></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">🟣 CM2</div><p style="font-size:18px;line-height:1.6">① Deviner le sens de <em>omnivore, aquatique, bienveillant, méconduite</em> par décomposition<br>② Justification écrite en identifiant chaque élément</p></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">🎯 Phase 4 — Bilan · 5 min</div><div class="slide-h1">Mise en <span>commun</span></div><div class="consigne-box" style="border-color:#F5A623">CM2 partagent leurs justifications sur les mots inconnus. La classe valide ou complète.</div><div class="trace-box" style="border-color:#F5A623"><div class="trace-title" style="color:#F5A623">📝 Trace écrite commune</div><div class="trace-text">Un <strong>préfixe</strong> avant le radical change le sens (<em>re-, dé-, in-</em>). Un <strong>suffixe</strong> après change la classe (<em>-tion, -able, -eur</em>). Décomposer un mot aide à comprendre son sens.</div></div>` }
+    ]
+  },
+
+  // V5 — FORMATION DES MOTS — 12 juin
+  {
+    id:'v5', date:'12', month:'Juin',
+    seance:'V5 — Formation des mots',
+    notion:'Dérivation et composition',
+    color:'#A97FF5', colorL:'#2A1A4A', locked:false,
+    slides:[
+      { html:`<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">📚 Vocabulaire — Séance 5</div><div class="slide-h1">Formation <span>des mots</span></div><div class="slide-sub">Vendredi 12 juin 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge" style="background:#2A1A4A;border-color:#A97FF5;color:#A97FF5">⏱ Phase 1 — <a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dashed currentColor">Ma P'tite Règle ↗</a> · 5 min</div><div class="rule-box" style="background:#2A1A4A;border-color:#A97FF5"><div class="rule-title" style="color:#A97FF5">🔄 Retour V4</div><p>Rappel : préfixe / radical / suffixe. Donner un exemple de mot décomposé avec sa signification.</p></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">📖 Phase 2 — Leçon · 15 min</div><div class="slide-h1">Deux façons de <span>créer des mots</span></div><div class="two-col"><div class="card" style="border-color:#F5A623;background:#3A2A0A"><div class="card-title" style="color:#F5A623">1️⃣ La dérivation</div><p style="font-size:16px;line-height:1.7;margin-bottom:8px">Ajouter un préfixe ou suffixe à un radical.</p><p style="font-family:Caveat,cursive;font-size:38px;line-height:1.8">observer → observable<br>terre → enterrer<br>possible → impossible</p></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">2️⃣ La composition</div><p style="font-size:16px;line-height:1.7;margin-bottom:8px">Assembler deux mots existants.</p><p style="font-family:Caveat,cursive;font-size:38px;line-height:1.8">sous + marin = sous-marin<br>porte + manteau = portemanteau<br>chou + fleur = chou-fleur</p></div></div><div class="card" style="border-color:#2DD4BF;background:#0A2A28;margin-bottom:12px"><div class="card-title" style="color:#2DD4BF">🔬 Bonus CM2 — Racines grecques et latines</div><p style="font-family:Caveat,cursive;font-size:36px;line-height:1.8"><span style="color:#2DD4BF">bio-</span> = vie · <span style="color:#2DD4BF">geo-</span> = terre · <span style="color:#2DD4BF">graph-</span> = écrire · <span style="color:#2DD4BF">-phile</span> = qui aime</p></div><div class="trace-box" style="border-color:#A97FF5"><div class="trace-title" style="color:#A97FF5">📝 À retenir</div><div class="trace-text">On forme des mots par <strong>dérivation</strong> (préfixe/suffixe : <em>invisible</em>) ou par <strong>composition</strong> (assemblage : <em>porte-monnaie</em>).</div></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">⚡ Phase 2 suite — Collectif · 5 min</div><div class="slide-h1">Dérivation ou <span>composition ?</span></div><div class="consigne-box" style="border-color:#F5A623">Cliquez pour révéler comment chaque mot a été formé.</div><div class="phrase-item"><span class="phrase-text">porte-monnaie</span><button class="phrase-badge" data-result="ok" onclick="toggleBadge(this,'ok','rf1v')">?</button></div><div class="phrase-reason" id="rf1v">✓ <strong>Composition</strong> : porter + monnaie.</div><div class="phrase-item"><span class="phrase-text">imperméable</span><button class="phrase-badge" data-result="ok" onclick="toggleBadge(this,'ok','rf2v')">?</button></div><div class="phrase-reason" id="rf2v">✓ <strong>Dérivation</strong> : <em>im-</em> + radical + <em>-able</em>. Qui ne laisse pas passer l'eau.</div><div class="phrase-item"><span class="phrase-text">arc-en-ciel</span><button class="phrase-badge" data-result="ok" onclick="toggleBadge(this,'ok','rf3v')">?</button></div><div class="phrase-reason" id="rf3v">✓ <strong>Composition</strong> : arc + en + ciel — trois mots assemblés.</div><div class="phrase-item"><span class="phrase-text">invisible</span><button class="phrase-badge" data-result="ok" onclick="toggleBadge(this,'ok','rf4v')">?</button></div><div class="phrase-reason" id="rf4v">✓ <strong>Dérivation</strong> : <em>in-</em> + radical <em>vis</em> (voir) + <em>-ible</em>.</div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">✏️ Phase 3 — Exercices · 20 min</div><div class="slide-h1">À vos <span>fiches !</span></div><div class="two-col"><div class="card" style="border-color:#4CAF82;background:#1A3D2E"><div class="card-title" style="color:#4CAF82">🟢 CE2</div><p style="font-size:18px;line-height:1.6">① Classer 6 mots en deux colonnes : dérivés / composés<br>② Former 3 mots composés à partir de mots proposés</p></div><div class="card" style="border-color:#5B9CF6;background:#1A2A4A"><div class="card-title" style="color:#5B9CF6">🔵 CM1</div><p style="font-size:18px;line-height:1.6">① Identifier le procédé de formation de 8 mots + justification<br>② Inventer 3 mots nouveaux et expliquer leur sens</p></div></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">🟣 CM2</div><p style="font-size:18px;line-height:1.6">① Analyser <em>bibliophile, géologie, autobiographie, thermomètre</em> avec racines grec/latin<br>② Inventer 3 mots savants plausibles + rédiger leur définition</p></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">🎯 Phase 4 — Bilan · 5 min</div><div class="slide-h1">Mise en <span>commun</span></div><div class="consigne-box" style="border-color:#A97FF5">CM2 : lire les mots savants inventés. La classe vote pour le plus convaincant.</div><div class="trace-box" style="border-color:#A97FF5"><div class="trace-title" style="color:#A97FF5">📝 Trace écrite commune</div><div class="trace-text">On forme des mots par <strong>dérivation</strong> (préfixe/suffixe : <em>invisible</em>) ou par <strong>composition</strong> (assemblage : <em>porte-monnaie</em>). Ces procédés permettent de comprendre et de créer des mots nouveaux.</div></div>` }
+    ]
+  },
+
+  // V6 — REGISTRES DE LANGUE — 19 juin
+  {
+    id:'v6', date:'19', month:'Juin',
+    seance:'V6 — Les registres de langue',
+    notion:'Familier · Courant · Soutenu',
+    color:'#5B9CF6', colorL:'#1A2A4A', locked:false,
+    slides:[
+      { html:`<div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">📚 Vocabulaire — Séance 6</div><div class="slide-h1">Les registres <span>de langue</span></div><div class="slide-sub">Vendredi 19 juin 2026 · 45 minutes</div><div class="niveau-tags"><span class="niveau-ce2">CE2</span><span class="niveau-cm1">CM1</span><span class="niveau-cm2">CM2</span></div><div class="timer-badge" style="background:#1A2A4A;border-color:#5B9CF6;color:#5B9CF6">⏱ Phase 1 — <a href="https://5ilv1.github.io/ma-ptite-regle/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dashed currentColor">Ma P'tite Règle ↗</a> · 5 min</div><div class="rule-box" style="background:#1A2A4A;border-color:#5B9CF6"><div class="rule-title" style="color:#5B9CF6">🔄 Retour V5</div><p>Dérivation vs composition — donner un exemple de chaque procédé.</p></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">📖 Phase 2 — Leçon · 15 min</div><div class="slide-h1">Les trois <span>registres</span></div><div class="consigne-box" style="border-color:#5B9CF6">Ces phrases veulent dire la même chose. Qu'est-ce qui change ?</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px"><div class="card" style="border-color:#F56B6B;background:#3A1A1A"><div class="card-title" style="color:#F56B6B">😎 Familier</div><p style="font-family:Caveat,cursive;font-size:42px;color:#F56B6B">T'as vu mon bouquin ?</p></div><div class="card" style="border-color:#5B9CF6;background:#1A2A4A"><div class="card-title" style="color:#5B9CF6">🗣 Courant</div><p style="font-family:Caveat,cursive;font-size:42px;color:#5B9CF6">As-tu vu mon livre ?</p></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">🎩 Soutenu</div><p style="font-family:Caveat,cursive;font-size:42px;color:#A97FF5">Auriez-vous aperçu mon ouvrage ?</p></div></div><table class="reg-table"><thead><tr><th style="background:#3A1A1A;color:#F56B6B">Familier</th><th style="background:#1A2A4A;color:#5B9CF6">Courant</th><th style="background:#2A1A4A;color:#A97FF5">Soutenu</th></tr></thead><tbody><tr><td style="background:#3A1A1A;color:#F56B6B">une bagnole</td><td style="background:#1A2A4A;color:#5B9CF6">une voiture</td><td style="background:#2A1A4A;color:#A97FF5">un véhicule</td></tr><tr><td style="background:#3A1A1A;color:#F56B6B">bouffer</td><td style="background:#1A2A4A;color:#5B9CF6">manger</td><td style="background:#2A1A4A;color:#A97FF5">se restaurer</td></tr><tr><td style="background:#3A1A1A;color:#F56B6B">un gosse</td><td style="background:#1A2A4A;color:#5B9CF6">un enfant</td><td style="background:#2A1A4A;color:#A97FF5">un bambin</td></tr><tr><td style="background:#3A1A1A;color:#F56B6B">un bouquin</td><td style="background:#1A2A4A;color:#5B9CF6">un livre</td><td style="background:#2A1A4A;color:#A97FF5">un ouvrage</td></tr></tbody></table><div class="trace-box" style="border-color:#5B9CF6"><div class="trace-title" style="color:#5B9CF6">📝 À retenir</div><div class="trace-text">Le <strong>registre familier</strong> s'utilise entre amis. Le <strong>registre courant</strong> convient en classe et à l'écrit du quotidien. Le <strong>registre soutenu</strong> s'emploie dans les textes littéraires et situations formelles.</div></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#F5A623;--phase-bg:#3A2A0A">⚡ Phase 2 suite — Collectif · 5 min</div><div class="slide-h1">Quel registre pour <span>cette situation ?</span></div><div class="consigne-box" style="border-color:#F5A623">Cliquez pour révéler si le registre est adapté à la situation.</div><div class="phrase-item"><span class="phrase-text">Lettre au directeur : « Salut, c'est nul ! »</span><button class="phrase-badge" data-result="ko" onclick="toggleBadge(this,'ko','rg1v')">?</button></div><div class="phrase-reason" id="rg1v">✗ Registre familier — inadapté. Il faudrait : <em>« Je me permets de vous signaler que cette situation me semble insatisfaisante. »</em></div><div class="phrase-item"><span class="phrase-text">Dans la cour : « T'inquiète, c'est bon ! »</span><button class="phrase-badge" data-result="ok" onclick="toggleBadge(this,'ok','rg2v')">?</button></div><div class="phrase-reason" id="rg2v">✓ Registre familier — parfaitement adapté entre amis dans la cour.</div><div class="phrase-item"><span class="phrase-text">Exposé oral : « Le loup, il mange les moutons. »</span><button class="phrase-badge" data-result="ko" onclick="toggleBadge(this,'ko','rg3v')">?</button></div><div class="phrase-reason" id="rg3v">✗ Trop familier pour un exposé. → <em>« Le loup se nourrit de moutons. »</em></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#A97FF5;--phase-bg:#2A1A4A">🎩 Bonus — Le soutenu <span>qui surprend</span></div><div class="slide-h1">Registre soutenu <span>version étonnante</span></div><div class="consigne-box" style="border-color:#A97FF5">Ces formulations existent vraiment. À lire à voix haute !</div><div class="two-col"><div class="card" style="border-color:#F56B6B;background:#3A1A1A"><div class="card-title" style="color:#F56B6B">Ce qu'on voudrait dire</div><p style="font-family:Caveat,cursive;font-size:36px;line-height:1.9;color:#F56B6B">Je m'en fiche.<br>Il parle trop.<br>C'est n'importe quoi.<br>Je ne sais pas.<br>Il fait beau.</p></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">Version soutenue 🎩</div><p style="font-family:Caveat,cursive;font-size:36px;line-height:1.9;color:#A97FF5">Peu me chaut.<br>Il a la langue bien pendue.<br>Voilà qui confine à l'absurde.<br>J'en demeure fort ignorant.<br>Le temps se montre fort clément.</p></div></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">✏️ Phase 3 — Exercices · 20 min</div><div class="slide-h1">À vos <span>fiches !</span></div><div class="two-col"><div class="card" style="border-color:#4CAF82;background:#1A3D2E"><div class="card-title" style="color:#4CAF82">🟢 CE2</div><p style="font-size:18px;line-height:1.6">① Colorier en rouge les mots familiers, en bleu les mots courants<br>② Réécrire une phrase familière en registre courant</p></div><div class="card" style="border-color:#5B9CF6;background:#1A2A4A"><div class="card-title" style="color:#5B9CF6">🔵 CM1</div><p style="font-size:18px;line-height:1.6">① Classer 9 mots dans un tableau familier/courant/soutenu<br>② Réécrire 2 phrases : familier → courant ; courant → soutenu</p></div></div><div class="card" style="border-color:#A97FF5;background:#2A1A4A"><div class="card-title" style="color:#A97FF5">🟣 CM2</div><p style="font-size:18px;line-height:1.6">① Identifier le registre de 3 extraits + justifier avec 2 indices (lexique, syntaxe)<br>② Réécrire une lettre familière en registre soutenu</p></div>` },
+      { html:`<div class="slide-phase" style="--phase-color:#5B9CF6;--phase-bg:#1A2A4A">🎯 Phase 4 — Bilan · 5 min</div><div class="slide-h1">Mise en <span>commun</span></div><div class="consigne-box" style="border-color:#5B9CF6">CM2 lisent leur lettre réécrite. La classe identifie les changements : lexique ? syntaxe ?</div><div class="trace-box" style="border-color:#5B9CF6"><div class="trace-title" style="color:#5B9CF6">📝 Trace écrite — Bilan progression vocabulaire P5</div><div class="trace-text">Les <strong>registres de langue</strong> permettent d'adapter ses mots à la situation. Ex : <em>bouquin / livre / ouvrage.</em><br>Cette période : <strong>synonymes · antonymes · familles de mots · préfixes/suffixes · formation des mots · registres de langue.</strong></div></div>` }
+    ]
+  }
+];
+
+
+// ══════════════════════════════════════
+// ÉTAT
+// ══════════════════════════════════════
+let currentSeance = null;
+let currentSlide = 0;
+
+// ══════════════════════════════════════
+// CALENDRIER
+// ══════════════════════════════════════
+function renderCalendar() {
+  const MONTH_ORDER = { 'Avril':4, 'Mai':5, 'Juin':6, 'Juillet':7 };
+  const sorted = [...SEANCES].sort((a, b) => {
+    const ma = MONTH_ORDER[a.month] || 0, mb = MONTH_ORDER[b.month] || 0;
+    if (ma !== mb) return ma - mb;
+    return parseInt(a.date) - parseInt(b.date);
+  });
+
+  // Grouper par mois
+  const byMonth = {};
+  sorted.forEach(s => {
+    if (!byMonth[s.month]) byMonth[s.month] = [];
+    byMonth[s.month].push(s);
+  });
+
+  const sidebar = document.getElementById('cal-sidebar-content');
+  sidebar.innerHTML = '';
+
+  Object.entries(byMonth).forEach(([month, seances]) => {
+    const block = document.createElement('div');
+    block.className = 'month-block';
+    block.innerHTML = `<div class="month-label">${month} 2026</div>`;
+
+    seances.forEach(s => {
+      const btn = document.createElement('button');
+      btn.className = 'cal-btn' + (s.locked ? ' locked' : '');
+      btn.style.setProperty('--day-color', s.color);
+      const discipline = s.id.startsWith('v') ? '📚 Voc' : '✏️ PE';
+      btn.innerHTML = `
+        <div class="cal-btn-date">${s.date}</div>
+        <div class="cal-btn-body">
+          <div class="cal-btn-disc">${discipline}</div>
+          <div class="cal-btn-title">${s.seance}</div>
+          <div class="cal-btn-notion">${s.notion}</div>
+        </div>
+        ${s.locked ? '<div class="cal-btn-lock">🔒</div>' : `<div class="cal-btn-count">${s.slides.length}</div>`}
+      `;
+      if (!s.locked) btn.addEventListener('click', () => openSeance(s.id));
+      block.appendChild(btn);
+    });
+
+    sidebar.appendChild(block);
+  });
+}
+
+// ══════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════
+function openSeance(id) {
+  currentSeance = SEANCES.find(s => s.id === id);
+  currentSlide = 0;
+  // Marquer le bouton actif dans la sidebar
+  document.querySelectorAll('.cal-btn').forEach(b => b.classList.remove('active'));
+  const btns = document.querySelectorAll('.cal-btn');
+  btns.forEach(b => { if (b.querySelector('.cal-btn-title') && b.querySelector('.cal-btn-title').textContent === currentSeance.seance) b.classList.add('active'); });
+  document.getElementById('screen-cal').classList.remove('active');
+  document.getElementById('screen-slide').classList.add('active');
+  document.documentElement.style.setProperty('--accent-color', currentSeance.color);
+  renderSlides();
+  updateNav();
+}
+
+function goBack() {
+  document.getElementById('screen-slide').classList.remove('active');
+  document.getElementById('screen-cal').classList.add('active');
+  currentSeance = null;
+}
+
+function nextSlide() {
+  if (currentSlide < currentSeance.slides.length - 1) {
+    currentSlide++;
+    renderSlides();
+    updateNav();
+  }
+}
+
+function prevSlide() {
+  if (currentSlide > 0) {
+    currentSlide--;
+    renderSlides();
+    updateNav();
+  }
+}
+
+function goToSlide(i) {
+  currentSlide = i;
+  renderSlides();
+  updateNav();
+}
+
+function renderSlides() {
+  const stage = document.getElementById('slide-stage');
+  stage.innerHTML = '';
+  const s = currentSeance.slides[currentSlide];
+  const div = document.createElement('div');
+  div.className = 'slide active';
+  div.innerHTML = s.html;
+  stage.appendChild(div);
+
+  document.getElementById('slide-title-bar').textContent = currentSeance.seance;
+  document.getElementById('slide-sub-bar').textContent =
+    `Slide ${currentSlide + 1} / ${currentSeance.slides.length}`;
+
+  // Dots
+  const dots = document.getElementById('progress-dots');
+  dots.innerHTML = '';
+  currentSeance.slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === currentSlide ? ' active' : i < currentSlide ? ' done' : '');
+    d.onclick = () => goToSlide(i);
+    dots.appendChild(d);
+  });
+
+  // Réinitialiser DnD si présent
+  if (stage.querySelector('#dnd-pool')) initDnd();
+}
+
+function updateNav() {
+  document.getElementById('btn-prev').disabled = currentSlide === 0;
+  document.getElementById('btn-next').disabled = currentSlide === currentSeance.slides.length - 1;
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (!currentSeance) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   prevSlide();
+  if (e.key === 'Escape') goBack();
+});
+
+// ══════════════════════════════════════
+// INTERACTIONS SLIDES
+// ══════════════════════════════════════
+function toggleBadge(btn, result, reasonId) {
+  // Révéler/cacher la raison
+  const reason = document.getElementById(reasonId);
+  if (reason) reason.classList.toggle('visible');
+  // Colorer le badge seulement quand on clique (la réponse se révèle)
+  if (btn.dataset.result === 'ok') {
+    btn.classList.toggle('ok');
+    btn.textContent = btn.classList.contains('ok') ? '✓' : '?';
+  } else if (btn.dataset.result === 'ko') {
+    btn.classList.toggle('ko');
+    btn.textContent = btn.classList.contains('ko') ? '✗' : '?';
+  }
+}
+
+function revealReason(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('visible');
+}
+
+function revealVersions() {
+  ['v1-verdict','v2-verdict'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('visible');
+  });
+}
+
+function revealIntroVerdicts() {
+  ['ia-v','ib-v'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('visible');
+  });
+}
+
+function showParagraphes() {
+  const el = document.getElementById('para-result');
+  if (el) { el.style.display = 'block'; el.style.animation = 'fadeIn 0.4s'; }
+}
+
+function showSubstituts() {
+  const el = document.getElementById('sub-result');
+  if (el) { el.style.display = 'block'; }
+}
+
+function showIntroConclusion() {
+  const el = document.getElementById('intro-result');
+  if (el) { el.style.display = 'block'; }
+}
+
+function showTextCorrige() {
+  const el = document.getElementById('texte-corrige');
+  if (el) el.classList.add('visible');
+}
+
+// ══════════════════════════════════════
+// DRAG AND DROP — S3
+// ══════════════════════════════════════
+function initDnd() {
+  const items = document.querySelectorAll('.dnd-item');
+  const targets = document.querySelectorAll('.dnd-target');
+
+  items.forEach(item => {
+    item.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', item.id);
+      item.classList.add('dragging');
+    });
+    item.addEventListener('dragend', () => item.classList.remove('dragging'));
+  });
+
+  targets.forEach(target => {
+    target.addEventListener('dragover', e => {
+      e.preventDefault();
+      target.classList.add('drag-over');
+    });
+    target.addEventListener('dragleave', () => target.classList.remove('drag-over'));
+    target.addEventListener('drop', e => {
+      e.preventDefault();
+      target.classList.remove('drag-over');
+      const id = e.dataTransfer.getData('text/plain');
+      const item = document.getElementById(id);
+      if (item) target.appendChild(item);
+    });
+  });
+}
+
+function checkDnd() {
+  const feedback = document.getElementById('dnd-feedback');
+  const targets = document.querySelectorAll('.dnd-target');
+  let correct = 0, total = 0;
+
+  targets.forEach(target => {
+    const expectedPara = target.dataset.target;
+    const items = target.querySelectorAll('.dnd-item');
+    items.forEach(item => {
+      total++;
+      if (item.dataset.para === expectedPara) {
+        item.classList.add('dnd-correct');
+        item.classList.remove('dnd-wrong');
+        correct++;
+      } else {
+        item.classList.add('dnd-wrong');
+        item.classList.remove('dnd-correct');
+      }
+    });
+  });
+
+  // Vérifier les phrases non classées
+  const pool = document.getElementById('dnd-pool');
+  if (pool) {
+    const remaining = pool.querySelectorAll('.dnd-item');
+    remaining.forEach(item => { total++; item.style.borderColor = '#F5A623'; });
+  }
+
+  if (feedback) {
+    feedback.classList.add('visible');
+    if (correct === 6) {
+      feedback.textContent = `✅ Parfait ! Les 6 phrases sont bien classées. §1 (Le merle) : phrases 2, 4, 6, 1 — §2 (La pie) : phrases 3, 5`;
+      feedback.style.background = 'var(--green-l)';
+      feedback.style.borderColor = 'var(--green)';
+      feedback.style.color = 'var(--green)';
+    } else {
+      feedback.textContent = `${correct}/${total === 0 ? 6 : total} phrases bien classées. Vérifiez les éléments en rouge.`;
+      feedback.style.background = 'var(--red-l)';
+      feedback.style.borderColor = 'var(--red)';
+      feedback.style.color = 'var(--red)';
+    }
+  }
+}
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+renderCalendar();
+</script>
+</body>
+</html>
+</body>
+</html>
