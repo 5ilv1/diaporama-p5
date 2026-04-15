@@ -1605,7 +1605,7 @@ function renderCalendar() {
       const btn = document.createElement('button');
       btn.className = 'cal-btn' + (s.locked ? ' locked' : '');
       btn.style.setProperty('--day-color', s.color);
-      const discipline = s.id.startsWith('v') ? '📚 Voc' : '✏️ PE';
+      const discipline = s.id.startsWith('v') ? '📚 Voc' : s.id.startsWith('edl') ? '📐 EDL' : '✏️ PE';
       btn.innerHTML = `
         <div class="cal-btn-date">${s.date}</div>
         <div class="cal-btn-body">
